@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="progressBar_width_small">82dp</dimen>
+    <dimen name="progressBar_height_small">63dp</dimen>
+</resources>
