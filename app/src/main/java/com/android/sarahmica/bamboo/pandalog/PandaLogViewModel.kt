@@ -16,6 +16,15 @@ class PandaLogViewModel(
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    //TODO: what things do I need to show on the for the main view?
+
+    // I need to calculate the "panda score" by pulling all the activities they've done for the day
+
+    // I need a list of all the activities they've done today and I should display them i
+    // in the recyclerView list
+
+    //TODO: how do I get headings for the dates?
+
     init {}
 
 
