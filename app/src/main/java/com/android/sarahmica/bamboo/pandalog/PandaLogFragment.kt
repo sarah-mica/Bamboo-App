@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.android.sarahmica.bamboo.database.BambooDatabase
 import com.android.sarahmica.bamboo.databinding.FragmentPandaLogBinding
 import com.android.sarahmica.bamboo.R
@@ -31,9 +33,19 @@ class PandaLogFragment : Fragment() {
 
         val pandaLogViewModel = ViewModelProviders.of(this, viewModelFactory).get(PandaLogViewModel::class.java)
 
-
         binding.setLifecycleOwner(this)
         binding.pandaLogViewModel = pandaLogViewModel
+
+        pandaLogViewModel.navigateToAddScreen.observe(viewLifecycleOwner,
+            Observer { shouldNavigate ->
+                if (shouldNavigate == true) {
+                    val navController = binding.root.findNavController()
+                    navController.navigate(PandaLogFragmentDirections
+                        .actionPandaLogFragmentToAddDailyActivitiesFragment())
+                    pandaLogViewModel.onNavigatedToAddScreen()
+                }
+            })
+
         return binding.root
     }
 }

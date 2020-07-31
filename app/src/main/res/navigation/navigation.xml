@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation.xml">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/pandaLogFragment">
+
+    <fragment
+        android:id="@+id/pandaLogFragment"
+        android:name="com.android.sarahmica.bamboo.pandalog.PandaLogFragment"
+        android:label="PandaLogFragment"
+        tools:layout="@layout/fragment_panda_log">
+        <action
+            android:id="@+id/action_pandaLogFragment_to_addDailyActivitiesFragment"
+            app:destination="@id/addDailyActivitiesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addDailyActivitiesFragment"
+        android:name="com.android.sarahmica.bamboo.addActivities.AddDailyActivitiesFragment"
+        android:label="AddDailyActivitiesFragment"
+        tools:layout="@layout/fragment_add_daily_activities">
+        <action
+            android:id="@+id/action_addDailyActivitiesFragment_to_pandaLogFragment"
+            app:destination="@id/pandaLogFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/pandaLogFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
 
 </navigation>

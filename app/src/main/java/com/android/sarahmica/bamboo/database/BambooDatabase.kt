@@ -12,7 +12,7 @@ import androidx.room.RoomDatabase
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities = [GreenActivity::class], version = 1, exportSchema = false)
+@Database(entities = [GreenActivity::class, Activity::class], version = 1, exportSchema = false)
 abstract class BambooDatabase : RoomDatabase(){
 
     /**

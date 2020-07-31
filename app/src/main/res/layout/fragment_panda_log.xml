@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -9,121 +8,192 @@
             type="com.android.sarahmica.bamboo.pandalog.PandaLogViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Haven't decided if I want to use this image yet
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="210dp"
-            android:layout_marginTop="32dp"
-            android:adjustViewBounds="true"
-            app:layout_constraintBottom_toTopOf="@+id/startOfPosts"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/bamboo" />
-            -->
 
-        <ProgressBar
-            android:id="@+id/pandaScoreProgressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="140dp"
-            android:layout_height="126dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/pandaScore"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- Haven't decided if I want to use this image yet
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="0dp"
+                    android:layout_height="210dp"
+                    android:layout_marginTop="32dp"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintBottom_toTopOf="@+id/startOfPosts"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/bamboo" />
+                    -->
+
+                <ProgressBar
+                    android:id="@+id/pandaScoreProgressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="140dp"
+                    android:layout_height="126dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:max="1000"/>
+
+                <TextView
+                    android:id="@+id/pandaScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/pandaScoreProgressBar"
+                    app:layout_constraintEnd_toEndOf="@+id/pandaScoreProgressBar"
+                    app:layout_constraintStart_toStartOf="@+id/pandaScoreProgressBar"
+                    app:layout_constraintTop_toTopOf="@+id/pandaScoreProgressBar"
+                    tools:text="250" />
+
+
+                <!--Panda Score progress bar -->
+                <ProgressBar
+                    android:id="@+id/plasticScoreProgressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="@dimen/progressBar_width_small"
+                    android:layout_height="@dimen/progressBar_height_small"
+                    app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+                    app:layout_constraintEnd_toStartOf="@+id/energyScoreProgressBar"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar"
+                    android:max="100"/>
+
+                <ImageView
+                    android:id="@+id/plasticImage"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/ic_plastic_bottle"
+                    app:layout_constraintBottom_toBottomOf="@+id/plasticScoreProgressBar"
+                    app:layout_constraintEnd_toEndOf="@+id/plasticScoreProgressBar"
+                    app:layout_constraintStart_toStartOf="@+id/plasticScoreProgressBar"
+                    app:layout_constraintTop_toTopOf="@+id/plasticScoreProgressBar"
+                    />
+
+                <!-- <TextView
+                    android:id="@+id/plasticScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/plasticScoreProgressBar"
+                    app:layout_constraintEnd_toEndOf="@+id/plasticScoreProgressBar"
+                    app:layout_constraintStart_toStartOf="@+id/plasticScoreProgressBar"
+                    app:layout_constraintTop_toTopOf="@+id/plasticScoreProgressBar"
+                    tools:text="63" /> -->
+
+
+                <ProgressBar
+                    android:id="@+id/energyScoreProgressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="@dimen/progressBar_width_small"
+                    android:layout_height="@dimen/progressBar_height_small"
+                    app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+                    app:layout_constraintEnd_toStartOf="@+id/waterScoreProgressBar"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/plasticScoreProgressBar"
+                    app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar"
+                    android:max="100"/>
+
+                <ImageView
+                    android:id="@+id/energyImage"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/ic_flash"
+                    app:layout_constraintBottom_toBottomOf="@+id/energyScoreProgressBar"
+                    app:layout_constraintEnd_toEndOf="@+id/energyScoreProgressBar"
+                    app:layout_constraintStart_toStartOf="@+id/energyScoreProgressBar"
+                    app:layout_constraintTop_toTopOf="@+id/energyScoreProgressBar" />
+
+                <ProgressBar
+                    android:id="@+id/waterScoreProgressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="@dimen/progressBar_width_small"
+                    android:layout_height="@dimen/progressBar_height_small"
+                    app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+                    app:layout_constraintEnd_toStartOf="@+id/activismScoreProgressBar"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/energyScoreProgressBar"
+                    app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar"
+                    android:max="100"/>
+
+                <ImageView
+                    android:id="@+id/waterImage"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/ic_drop"
+                    app:layout_constraintBottom_toBottomOf="@+id/waterScoreProgressBar"
+                    app:layout_constraintEnd_toEndOf="@+id/waterScoreProgressBar"
+                    app:layout_constraintStart_toStartOf="@+id/waterScoreProgressBar"
+                    app:layout_constraintTop_toTopOf="@+id/waterScoreProgressBar" />
+
+                <ProgressBar
+                    android:id="@+id/activismScoreProgressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="@dimen/progressBar_width_small"
+                    android:layout_height="@dimen/progressBar_height_small"
+                    app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/waterScoreProgressBar"
+                    app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar" />
+
+                <ImageView
+                    android:id="@+id/activismImage"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/ic_fist"
+                    app:layout_constraintBottom_toBottomOf="@+id/activismScoreProgressBar"
+                    app:layout_constraintEnd_toEndOf="@+id/activismScoreProgressBar"
+                    app:layout_constraintStart_toStartOf="@+id/activismScoreProgressBar"
+                    app:layout_constraintTop_toTopOf="@+id/activismScoreProgressBar" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/startOfPosts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="219dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="340dp"
+                    android:layout_height="498dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.492"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/pandaScoreProgressBar"
-            app:layout_constraintEnd_toEndOf="@+id/pandaScoreProgressBar"
-            app:layout_constraintStart_toStartOf="@+id/pandaScoreProgressBar"
-            app:layout_constraintTop_toTopOf="@+id/pandaScoreProgressBar"
-            tools:text="250" />
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:onClick="@{() -> pandaLogViewModel.onFabClicked()}"
+            app:fabSize="auto"
+            app:srcCompat="@drawable/ic_add" />
 
 
-        <!--Panda Score progress bar -->
-        <ProgressBar
-            android:id="@+id/plasticScoreProgressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="@dimen/progressBar_width_small"
-            android:layout_height="@dimen/progressBar_height_small"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-            app:layout_constraintEnd_toStartOf="@+id/energyScoreProgressBar"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <TextView
-            android:id="@+id/plasticScore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/plasticScoreProgressBar"
-            app:layout_constraintEnd_toEndOf="@+id/plasticScoreProgressBar"
-            app:layout_constraintStart_toStartOf="@+id/plasticScoreProgressBar"
-            app:layout_constraintTop_toTopOf="@+id/plasticScoreProgressBar"
-            tools:text="63" />
-
-
-        <ProgressBar
-            android:id="@+id/energyScoreProgressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="@dimen/progressBar_width_small"
-            android:layout_height="@dimen/progressBar_height_small"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-            app:layout_constraintEnd_toStartOf="@+id/waterScoreProgressBar"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/plasticScoreProgressBar"
-            app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar" />
-
-        <ProgressBar
-            android:id="@+id/waterScoreProgressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="@dimen/progressBar_width_small"
-            android:layout_height="@dimen/progressBar_height_small"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-            app:layout_constraintEnd_toStartOf="@+id/activismScoreProgressBar"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/energyScoreProgressBar"
-            app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar" />
-
-        <ProgressBar
-            android:id="@+id/activismScoreProgressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="@dimen/progressBar_width_small"
-            android:layout_height="@dimen/progressBar_height_small"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/waterScoreProgressBar"
-            app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/startOfPosts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="219dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="340dp"
-            android:layout_height="498dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.492"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
