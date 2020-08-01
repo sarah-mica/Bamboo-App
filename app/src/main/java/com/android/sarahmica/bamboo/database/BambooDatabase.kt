@@ -4,6 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.android.sarahmica.bamboo.DATABASE_NAME
 
 /**
  * A database that stores [GreenActivity] information.
@@ -19,6 +23,8 @@ abstract class BambooDatabase : RoomDatabase(){
      * Connects the database to the DAO
      */
     abstract val bambooDatabaseDao: BambooDatabaseDao
+
+    abstract val activityDao: ActivityDao
 
     /**
      * Define a companion object, this allows us to add functions on the BambooDatabase class.
@@ -37,9 +43,27 @@ abstract class BambooDatabase : RoomDatabase(){
          *  reads will be done to and from the main memory. It means that changes made by one
          *  thread to shared data are visible to other threads.
          */
-        @Volatile
-        private var INSTANCE: BambooDatabase? = null
+        @Volatile private var instance: BambooDatabase? = null
 
+        fun getInstance(context: Context): BambooDatabase {
+            return instance ?: synchronized(this) {
+                instance ?: buildDatabase(context).also { instance = it }
+            }
+        }
+
+        private fun buildDatabase(context: Context): BambooDatabase {
+            return Room.databaseBuilder(context, BambooDatabase::class.java, DATABASE_NAME)
+                .addCallback(object : RoomDatabase.Callback() {
+                    override fun onCreate(db: SupportSQLiteDatabase) {
+                        super.onCreate(db)
+                        val request = OneTimeWorkRequestBuilder<SproutDatabaseWorker>().build()
+                        WorkManager.getInstance().enqueue(request)
+                    }
+                })
+                .build()
+        }
+
+        /*
         fun getInstance(context: Context): BambooDatabase {
             synchronized(this) {
                 var instance = INSTANCE
@@ -60,6 +84,6 @@ abstract class BambooDatabase : RoomDatabase(){
                 }
                 return instance
             }
-        }
+        }*/
     }
 }

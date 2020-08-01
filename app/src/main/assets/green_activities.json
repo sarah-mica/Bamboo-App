@@ -1,0 +1,67 @@
+[
+  {
+    "activityName": "refuse single-use plastic",
+    "activityType": "waste",
+    "pointValue": 15
+  },
+  {
+    "activityName": "abstain from meat",
+    "activityType": "waste",
+    "pointValue": 10
+  },
+  {
+    "activityName": "use public transport",
+    "acivityType": "energy",
+    "pointValue": 10
+  },
+  {
+    "activityName": "limited ac or heat usage",
+    "activityType": "energy",
+    "pointValue": 10
+  },
+  {
+    "activityName": "took a shorter shower",
+    "activityType": "water",
+    "pointValue": 10
+  },
+  {
+    "activityName": "buy used products",
+    "activityType": "waste",
+    "pointValue": 15
+  },
+  {
+    "activityName": "compost food",
+    "activityType": "waste",
+    "pointValue": 10
+  },
+  {
+    "activityName": "donate to a cause",
+    "activityType": "activism",
+    "pointValue": 10
+  },
+  {
+    "activityName": "convinced a friend to make a positive change",
+    "activityType": "activism",
+    "pointValue": 50
+  },
+  {
+    "activityName": "plant trees",
+    "activityType": "activism",
+    "pointValue": 25
+  },
+  {
+    "activityName": "garbage cleanup",
+    "activityType": "activism",
+    "pointValue": 40
+  },
+  {
+    "activityName": "saved leftovers",
+    "activityType": "waste",
+    "pointValue": 10
+  },
+  {
+    "activityName": "stopped a leaky tap",
+    "activityType": "water",
+    "pointValue": 10
+  }
+]

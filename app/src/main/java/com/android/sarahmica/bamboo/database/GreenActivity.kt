@@ -16,4 +16,5 @@ data class GreenActivity (
     @ColumnInfo(name = "day_completed")
     var dayCompleted: Long = System.currentTimeMillis()
 
+
 )

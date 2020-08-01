@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.sarahmica.bamboo.database.BambooDatabaseDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class AddDailyActivitiesViewModel(
     val database: BambooDatabaseDao) : ViewModel() {
@@ -26,7 +23,7 @@ class AddDailyActivitiesViewModel(
     }
 
     //TODO: figure out how I want to add and keep track of activities in the DB
-    /*fun onAddGreenActivity(activityId: Int) {
+    fun onAddGreenActivity(activityId: Int) {
         uiScope.launch{
             withContext(Dispatchers.IO) {
                 //TODO
@@ -34,7 +31,7 @@ class AddDailyActivitiesViewModel(
             }
             _navigateToPandaLog.value = true
         }
-    }*/
+    }
 
 
     override fun onCleared() {
