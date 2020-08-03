@@ -63,27 +63,5 @@ abstract class BambooDatabase : RoomDatabase(){
                 .build()
         }
 
-        /*
-        fun getInstance(context: Context): BambooDatabase {
-            synchronized(this) {
-                var instance = INSTANCE
-
-                if (instance == null) {
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        BambooDatabase::class.java,
-                        "green_activity_history_database"
-                    )
-                        // Wipes and rebuilds instead of migrating if no Migration object.
-                        // migration with Room in this blog post:
-                        // https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
-                        .fallbackToDestructiveMigration()
-                        .build()
-
-                    INSTANCE = instance
-                }
-                return instance
-            }
-        }*/
     }
 }

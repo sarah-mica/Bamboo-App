@@ -17,8 +17,11 @@ buildscript {
         version_moshi = "1.8.0"
         version_glide = "4.10.0"
         version_joda = "2.10"
+        version_junit = "4.12"
         version_work = "2.1.0"
         version_timber = "4.7.1"
+        testExtJunit = '1.1.0'
+        coreTestingVersion = '2.0.0'
     }
     repositories {
         google()

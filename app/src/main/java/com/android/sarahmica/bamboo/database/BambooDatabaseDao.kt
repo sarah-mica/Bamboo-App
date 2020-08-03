@@ -23,10 +23,10 @@ interface BambooDatabaseDao {
      * Selects all the [GreenActivity]'s that are of the type that matches the input type
      * ie, if we want to grab all the plastic activities
      *
-     * @param activityType the group id of the activity's type we want to get
+     * //@param activityType the group id of the activity's type we want to get
      */
-    @Query("SELECT * FROM daily_green_activity_table INNER JOIN activities ON daily_green_activity_table.activity_id = activities.activity_id WHERE activities.activity_type = :activityType")
-    fun getAllActivityEntriesOfType(activityType: Int): List<GreenActivity>
+    //@Query("SELECT * FROM daily_green_activity_table INNER JOIN activities ON daily_green_activity_table.activity_id = activities.activity_id WHERE activities.activity_type = :activityType")
+    //fun getAllActivityEntriesOfType(activityType: Int): List<GreenActivity>
 
     /**
      * Selects and returns all rows in the table

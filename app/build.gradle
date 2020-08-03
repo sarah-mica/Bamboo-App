@@ -77,4 +77,10 @@ dependencies {
 
     // WorkManager
     implementation "android.arch.work:work-runtime-ktx:$version_work"
+
+    // testing dependencies
+    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
+    testImplementation "junit:junit:$rootProject.version_junit"
+
 }

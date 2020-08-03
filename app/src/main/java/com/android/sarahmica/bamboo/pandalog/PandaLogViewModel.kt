@@ -55,7 +55,7 @@ class PandaLogViewModel(
         initializeProgressBars()
     }
 
-    fun initializeProgressBars() {
+    private fun initializeProgressBars() {
         _pandaScore.value = 0
         _plasticScore.value = 0
         _energyScore.value = 0

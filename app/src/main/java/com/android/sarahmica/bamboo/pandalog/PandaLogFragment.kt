@@ -33,7 +33,7 @@ class PandaLogFragment : Fragment() {
 
         val pandaLogViewModel = ViewModelProviders.of(this, viewModelFactory).get(PandaLogViewModel::class.java)
 
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         binding.pandaLogViewModel = pandaLogViewModel
 
         pandaLogViewModel.navigateToAddScreen.observe(viewLifecycleOwner,
