@@ -3,18 +3,26 @@ package com.android.sarahmica.bamboo.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.squareup.moshi.JsonClass
 
-@Entity(tableName = "daily_green_activity_table")
+@Entity(tableName = "green_activities")
+@JsonClass(generateAdapter = true)
 data class GreenActivity (
-    @PrimaryKey(autoGenerate = true)
+
+    @PrimaryKey
     @ColumnInfo(name = "id")
-    var entryId: Long = 0L,
+    val activityId: Int,
 
-    @ColumnInfo(name = "activity_id")
-    var activityId: Int,
+    // What is the name of the activity that we'll display to the user?
+    @ColumnInfo(name = "activity_name")
+    val activityName: String,
 
-    @ColumnInfo(name = "day_completed")
-    var dayCompleted: Long = System.currentTimeMillis()
+    // What group of activities does this belong to?
+    @ColumnInfo(name = "activity_type")
+    val activityType: Int,
 
+    // How much many "panda points" is this activity worth?
+    @ColumnInfo(name = "point_value")
+    val pointValue: Int
 
 )

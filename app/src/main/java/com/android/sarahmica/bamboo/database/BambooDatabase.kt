@@ -10,21 +10,21 @@ import androidx.work.WorkManager
 import com.android.sarahmica.bamboo.DATABASE_NAME
 
 /**
- * A database that stores [GreenActivity] information.
+ * A database that stores [LogEntry] information.
  * And a global method to get access to the database.
  *
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities = [GreenActivity::class, Activity::class], version = 1, exportSchema = false)
+@Database(entities = [LogEntry::class, GreenActivity::class], version = 2, exportSchema = false)
 abstract class BambooDatabase : RoomDatabase(){
 
     /**
      * Connects the database to the DAO
      */
-    abstract val bambooDatabaseDao: BambooDatabaseDao
+    abstract fun bambooDatabaseDao(): LogEntryDao
 
-    abstract val activityDao: ActivityDao
+    abstract fun activityDao(): GreenActivityDao
 
     /**
      * Define a companion object, this allows us to add functions on the BambooDatabase class.
@@ -51,6 +51,7 @@ abstract class BambooDatabase : RoomDatabase(){
             }
         }
 
+        // Create and pre-populate the database
         private fun buildDatabase(context: Context): BambooDatabase {
             return Room.databaseBuilder(context, BambooDatabase::class.java, DATABASE_NAME)
                 .addCallback(object : RoomDatabase.Callback() {

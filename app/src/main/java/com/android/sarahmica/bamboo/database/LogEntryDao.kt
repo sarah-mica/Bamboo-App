@@ -4,23 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
-interface BambooDatabaseDao {
+interface LogEntryDao {
     @Insert
-    fun insert(activity: GreenActivity)
+    fun insert(activity: LogEntry)
 
     @Update
-    fun update(activity: GreenActivity)
+    fun update(activity: LogEntry)
 
     /**
      * Selects and returns the row that matches the supplied primary key
      *
      * @param entryId the id value for the entry we want to look up
      */
-    @Query("SELECT * FROM daily_green_activity_table WHERE id = :entryId")
-    fun get(entryId: Long): GreenActivity?
+    @Query("SELECT * FROM log_entry_table WHERE id = :entryId")
+    fun get(entryId: Long): LogEntry?
 
     /**
-     * Selects all the [GreenActivity]'s that are of the type that matches the input type
+     * Selects all the [LogEntry]'s that are of the type that matches the input type
      * ie, if we want to grab all the plastic activities
      *
      * //@param activityType the group id of the activity's type we want to get
@@ -32,15 +32,7 @@ interface BambooDatabaseDao {
      * Selects and returns all rows in the table
      * Sorted by the time it was entered in descending order (we might want to change this later)
      */
-    @Query("SELECT * FROM daily_green_activity_table ORDER BY id DESC")
-    fun getAllActivities(): LiveData<List<GreenActivity>>
-
-    /**
-     * Deletes all values from the table.
-     *
-     * TODO: I don't think I'll actually need this in the final version, so remove this at some point
-     */
-    @Query("DELETE FROM daily_green_activity_table")
-    fun clear()
+    @Query("SELECT * FROM log_entry_table ORDER BY id DESC")
+    fun getAllActivities(): LiveData<List<LogEntry>>
 
 }

@@ -3,7 +3,7 @@ package com.android.sarahmica.bamboo.pandalog
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.android.sarahmica.bamboo.database.BambooDatabaseDao
+import com.android.sarahmica.bamboo.database.LogEntryDao
 import java.lang.IllegalArgumentException
 
 /**
@@ -12,7 +12,7 @@ import java.lang.IllegalArgumentException
  * Provides the BambooDatabaseDao and context to the ViewModel
  */
 class PandaLogViewModelFactory(
-    private val dataSource: BambooDatabaseDao,
+    private val dataSource: LogEntryDao,
     private val application: Application) : ViewModelProvider.Factory {
 
     @Suppress("unchecked_cast")

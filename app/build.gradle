@@ -5,13 +5,13 @@ apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "30.0.0"
 
     defaultConfig {
         applicationId "com.android.sarahmica.bamboo"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -19,7 +19,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -28,59 +28,71 @@ android {
         enabled = true
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // work-runtime-ktx 2.1.0 and above now requires Java 8
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     // Support libraries
-    implementation "androidx.appcompat:appcompat:$version_appcompat"
-    implementation "androidx.fragment:fragment:$version_fragment"
-    implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.fragment:fragment:$fragmentVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
 
     // Android KTX
-    implementation "androidx.core:core-ktx:$version_core"
+    implementation "androidx.core:core-ktx:$coreVersion"
 
     // Navigation
-    implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
-    implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
+    implementation "android.arch.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "android.arch.navigation:navigation-ui-ktx:$navigationVersion"
 
     // Coroutines for getting off the UI thread
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_kotlin_coroutines"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
 
     // Retrofit for networking
-    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
-    implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
+    //implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    //implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    //implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$retrofitCoroutinesAdapterVersion"
 
     // Moshi for parsing the JSON format
-    implementation "com.squareup.moshi:moshi:$version_moshi"
-    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+    implementation "com.squareup.moshi:moshi:$moshiVersion"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    //implementation "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
     // Joda time library for dealing with time
-    implementation "joda-time:joda-time:$version_joda"
+    //implementation "joda-time:joda-time:$jodaVersion"
 
     // ViewModel and LiveData (arch components)
-    implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
 
     // Logging
-    implementation "com.jakewharton.timber:timber:$version_timber"
+    implementation "com.jakewharton.timber:timber:$timberVersion"
 
     // Glide for images
-    implementation "com.github.bumptech.glide:glide:$version_glide"
+    //implementation "com.github.bumptech.glide:glide:$glideVersion"
 
     // Room database
-    implementation "androidx.room:room-runtime:$version_room"
-    kapt "androidx.room:room-compiler:$version_room"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
 
     // WorkManager
-    implementation "android.arch.work:work-runtime-ktx:$version_work"
+    implementation "android.arch.work:work-runtime-ktx:$workVersion"
 
     // testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
-    testImplementation "junit:junit:$rootProject.version_junit"
+    testImplementation "junit:junit:$rootProject.junitVersion"
 
 }

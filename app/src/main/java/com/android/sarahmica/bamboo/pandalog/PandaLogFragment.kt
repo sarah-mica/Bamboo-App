@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.android.sarahmica.bamboo.database.BambooDatabase
 import com.android.sarahmica.bamboo.databinding.FragmentPandaLogBinding
@@ -28,10 +28,10 @@ class PandaLogFragment : Fragment() {
             inflater, R.layout.fragment_panda_log, container, false)
 
         val application = requireNotNull(this.activity).application
-        val dataSource = BambooDatabase.getInstance(application).bambooDatabaseDao
+        val dataSource = BambooDatabase.getInstance(application).bambooDatabaseDao()
         val viewModelFactory = PandaLogViewModelFactory(dataSource, application)
 
-        val pandaLogViewModel = ViewModelProviders.of(this, viewModelFactory).get(PandaLogViewModel::class.java)
+        val pandaLogViewModel = ViewModelProvider(this, viewModelFactory).get(PandaLogViewModel::class.java)
 
         binding.lifecycleOwner = this
         binding.pandaLogViewModel = pandaLogViewModel

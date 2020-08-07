@@ -3,7 +3,6 @@
 package com.android.sarahmica.bamboo.database
 
 import android.content.Context
-import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.android.sarahmica.bamboo.GREEN_DATA_FILENAME
@@ -37,14 +36,14 @@ class SproutDatabaseWorker(
 
                     // create a jsonAdapter that converts to a List of Activities
                     val moshi: Moshi = Moshi.Builder().build()
-                    val listOfActivitiesType = Types.newParameterizedType(List::class.java, Activity::class.java)
-                    val jsonAdapter: JsonAdapter<List<Activity>> = moshi.adapter(listOfActivitiesType)
+                    val listOfActivitiesType = Types.newParameterizedType(List::class.java, GreenActivity::class.java)
+                    val jsonAdapter: JsonAdapter<List<GreenActivity>> = moshi.adapter(listOfActivitiesType)
 
                     val activityList = jsonAdapter.fromJson(jsonReader)
 
                     if (activityList != null) {
                         val database = BambooDatabase.getInstance(applicationContext)
-                        database.activityDao.insertAllActivities(activityList)
+                        database.activityDao().insertAllActivities(activityList)
                         Result.success()
                     }
                     else {

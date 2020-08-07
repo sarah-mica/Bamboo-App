@@ -4,14 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.android.sarahmica.bamboo.database.BambooDatabaseDao
+import com.android.sarahmica.bamboo.database.LogEntryDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class PandaLogViewModel(
-    val database: BambooDatabaseDao,
+    val database: LogEntryDao,
     application: Application) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
@@ -53,13 +53,15 @@ class PandaLogViewModel(
 
     init {
         initializeProgressBars()
+        Timber.i("Hey I believe you just init.. right?");
     }
 
     private fun initializeProgressBars() {
-        _pandaScore.value = 0
+        //TODO: these set values are just to visualize for now, set to 0 later
+        _pandaScore.value = 100
         _plasticScore.value = 0
         _energyScore.value = 0
-        _waterScore.value = 0
+        _waterScore.value = 20
         _activismScore.value = 0
     }
 
@@ -69,12 +71,6 @@ class PandaLogViewModel(
 
     fun onNavigatedToAddScreen() {
         _navigateToAddScreen.value = false
-    }
-
-    suspend fun clear() {
-        withContext(Dispatchers.IO) {
-            database.clear()
-        }
     }
 
     override fun onCleared() {

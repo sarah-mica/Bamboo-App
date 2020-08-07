@@ -2,8 +2,7 @@
 <resources
     xmlns:tools="http://schemas.android.com/tools">
 
-    <dimen name="progressBar_width_small">82dp</dimen>
-    <dimen name="progressBar_height_small">63dp</dimen>
+    <dimen name="progressBar_width_small">65dp</dimen>
     <dimen name="design_fab_image_size" tools:override="true">36dp</dimen>
 
 </resources>

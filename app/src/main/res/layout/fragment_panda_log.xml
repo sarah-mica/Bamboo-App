@@ -38,15 +38,18 @@
 
                 <ProgressBar
                     android:id="@+id/pandaScoreProgressBar"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="140dp"
-                    android:layout_height="126dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:max="1000"/>
+                    android:max="1000"
+                    android:indeterminate="false"
+                    android:progress="@{pandaLogViewModel.pandaScore}"
+                    android:progressDrawable="@drawable/progress"/>
 
                 <TextView
                     android:id="@+id/pandaScore"
@@ -63,16 +66,19 @@
                 <!--Panda Score progress bar -->
                 <ProgressBar
                     android:id="@+id/plasticScoreProgressBar"
-                    style="?android:attr/progressBarStyle"
+                    style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="@dimen/progressBar_width_small"
-                    android:layout_height="@dimen/progressBar_height_small"
-                    app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+                    android:layout_height="@dimen/progressBar_width_small"
+                    app:layout_constraintBottom_toTopOf="@+id/startOfPosts"
                     app:layout_constraintEnd_toStartOf="@+id/energyScoreProgressBar"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar"
-                    android:max="100"/>
+                    android:max="100"
+                    android:indeterminate="false"
+                    android:progress="@{pandaLogViewModel.plasticScore}"
+                    android:progressDrawable="@drawable/progress"/>
 
                 <ImageView
                     android:id="@+id/plasticImage"
@@ -99,15 +105,18 @@
 
                 <ProgressBar
                     android:id="@+id/energyScoreProgressBar"
-                    style="?android:attr/progressBarStyle"
+                    style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="@dimen/progressBar_width_small"
-                    android:layout_height="@dimen/progressBar_height_small"
-                    app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+                    android:layout_height="@dimen/progressBar_width_small"
+                    app:layout_constraintBottom_toTopOf="@+id/startOfPosts"
                     app:layout_constraintEnd_toStartOf="@+id/waterScoreProgressBar"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/plasticScoreProgressBar"
                     app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar"
-                    android:max="100"/>
+                    android:max="100"
+                    android:indeterminate="false"
+                    android:progress="@{pandaLogViewModel.energyScore}"
+                    android:progressDrawable="@drawable/progress"/>
 
                 <ImageView
                     android:id="@+id/energyImage"
@@ -121,15 +130,18 @@
 
                 <ProgressBar
                     android:id="@+id/waterScoreProgressBar"
-                    style="?android:attr/progressBarStyle"
+                    style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="@dimen/progressBar_width_small"
-                    android:layout_height="@dimen/progressBar_height_small"
-                    app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+                    android:layout_height="@dimen/progressBar_width_small"
+                    app:layout_constraintBottom_toTopOf="@+id/startOfPosts"
                     app:layout_constraintEnd_toStartOf="@+id/activismScoreProgressBar"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/energyScoreProgressBar"
                     app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar"
-                    android:max="100"/>
+                    android:max="100"
+                    android:indeterminate="false"
+                    android:progress="@{pandaLogViewModel.waterScore}"
+                    android:progressDrawable="@drawable/progress"/>
 
                 <ImageView
                     android:id="@+id/waterImage"
@@ -143,14 +155,18 @@
 
                 <ProgressBar
                     android:id="@+id/activismScoreProgressBar"
-                    style="?android:attr/progressBarStyle"
+                    style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="@dimen/progressBar_width_small"
-                    android:layout_height="@dimen/progressBar_height_small"
-                    app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+                    android:layout_height="@dimen/progressBar_width_small"
+                    app:layout_constraintBottom_toTopOf="@+id/startOfPosts"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/waterScoreProgressBar"
-                    app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar" />
+                    app:layout_constraintTop_toBottomOf="@+id/pandaScoreProgressBar"
+                    android:max="100"
+                    android:indeterminate="false"
+                    android:progress="@{pandaLogViewModel.activismScore}"
+                    android:progressDrawable="@drawable/progress"/>
 
                 <ImageView
                     android:id="@+id/activismImage"
@@ -167,7 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_begin="219dp" />
+                    app:layout_constraintGuide_begin="220dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
@@ -181,7 +197,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.492"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/plasticScoreProgressBar" />
+                    app:layout_constraintTop_toBottomOf="@+id/startOfPosts" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

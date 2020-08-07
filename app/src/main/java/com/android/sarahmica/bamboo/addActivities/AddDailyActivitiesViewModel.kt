@@ -3,12 +3,11 @@ package com.android.sarahmica.bamboo.addActivities
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.sarahmica.bamboo.database.Activity
-import com.android.sarahmica.bamboo.database.ActivityDao
+import com.android.sarahmica.bamboo.database.GreenActivityDao
 import kotlinx.coroutines.*
 
 class AddDailyActivitiesViewModel(
-    val database: ActivityDao) : ViewModel() {
+    val database: GreenActivityDao) : ViewModel() {
 
     private var viewModelJob = Job()
 
@@ -25,7 +24,7 @@ class AddDailyActivitiesViewModel(
     //val activitiesList: LiveData<List<Activity>>
     //    get() = _activitiesList
 
-    val activitiesList: LiveData<List<Activity>> = database.getAllActivities()
+    //val activitiesList: LiveData<List<Activity>> = database.getAllActivities()
 
     fun doneNavigating() {
         _navigateToPandaLog.value = false
