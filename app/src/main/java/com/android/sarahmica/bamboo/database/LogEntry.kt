@@ -9,10 +9,9 @@ import androidx.room.*
 @Entity(tableName = "log_entry_table")
 data class LogEntry (
     @PrimaryKey(autoGenerate = true)
-    var id: Long,
+    var id: Long = 0L,
 
     @ColumnInfo(name = "day_completed")
     val dayCompleted: Long = System.currentTimeMillis()
-
 
 )

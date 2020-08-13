@@ -28,8 +28,9 @@ class PandaLogFragment : Fragment() {
             inflater, R.layout.fragment_panda_log, container, false)
 
         val application = requireNotNull(this.activity).application
-        val dataSource = BambooDatabase.getInstance(application).bambooDatabaseDao()
-        val viewModelFactory = PandaLogViewModelFactory(dataSource, application)
+        val logEntryDao = BambooDatabase.getInstance(application).logEntryDao()
+        val logEntryActivityDao = BambooDatabase.getInstance(application).logEntryWithActivitiesDao()
+        val viewModelFactory = PandaLogViewModelFactory(logEntryDao, logEntryActivityDao, application)
 
         val pandaLogViewModel = ViewModelProvider(this, viewModelFactory).get(PandaLogViewModel::class.java)
 

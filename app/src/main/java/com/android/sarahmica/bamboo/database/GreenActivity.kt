@@ -19,7 +19,7 @@ data class GreenActivity (
 
     // What group of activities does this belong to?
     @ColumnInfo(name = "activity_type")
-    val activityType: Int,
+    val activityType: String,
 
     // How much many "panda points" is this activity worth?
     @ColumnInfo(name = "point_value")

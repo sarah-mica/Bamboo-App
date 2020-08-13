@@ -4,5 +4,6 @@
 
     <dimen name="progressBar_width_small">65dp</dimen>
     <dimen name="design_fab_image_size" tools:override="true">36dp</dimen>
+    <dimen name="margin_default">16dp</dimen>
 
 </resources>

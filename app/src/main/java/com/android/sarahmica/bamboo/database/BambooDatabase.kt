@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.android.sarahmica.bamboo.DATABASE_NAME
+import timber.log.Timber
 
 /**
  * A database that stores [LogEntry] information.
@@ -16,15 +17,20 @@ import com.android.sarahmica.bamboo.DATABASE_NAME
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities = [LogEntry::class, GreenActivity::class], version = 2, exportSchema = false)
+@Database(
+    entities = [LogEntry::class, GreenActivity::class, ActivityLogEntry::class],
+    version = 2,
+    exportSchema = false)
 abstract class BambooDatabase : RoomDatabase(){
 
     /**
      * Connects the database to the DAO
      */
-    abstract fun bambooDatabaseDao(): LogEntryDao
+    abstract fun logEntryDao(): LogEntryDao
 
     abstract fun activityDao(): GreenActivityDao
+
+    abstract fun logEntryWithActivitiesDao(): LogEntryWithActivityDao
 
     /**
      * Define a companion object, this allows us to add functions on the BambooDatabase class.
@@ -56,6 +62,7 @@ abstract class BambooDatabase : RoomDatabase(){
             return Room.databaseBuilder(context, BambooDatabase::class.java, DATABASE_NAME)
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
+                        Timber.i("queuing the request to sprout the database")
                         super.onCreate(db)
                         val request = OneTimeWorkRequestBuilder<SproutDatabaseWorker>().build()
                         WorkManager.getInstance().enqueue(request)

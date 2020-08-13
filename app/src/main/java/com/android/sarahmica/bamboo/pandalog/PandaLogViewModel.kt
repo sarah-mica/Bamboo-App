@@ -5,14 +5,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.sarahmica.bamboo.database.LogEntryDao
+import com.android.sarahmica.bamboo.database.LogEntryWithActivityDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import timber.log.Timber
 
 class PandaLogViewModel(
-    val database: LogEntryDao,
-    application: Application) : AndroidViewModel(application) {
+    val logEntryDao: LogEntryDao,
+    val logEntryActivityDao: LogEntryWithActivityDao,
+    application: Application
+) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
 

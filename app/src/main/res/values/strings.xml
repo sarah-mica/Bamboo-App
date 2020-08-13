@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Bamboo</string>
+    <string name="submit_button">Submit</string>
+    <string name="add_activities_prompt">What green actions did you take today?</string>
 </resources>

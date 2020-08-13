@@ -25,6 +25,7 @@ class SproutDatabaseWorker(
 ) : CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result = coroutineScope {
+        Timber.i("hello, we're about to sprout the database now...")
         try {
             // open the json file where we store all the default Activity data to add to the DB
             applicationContext.assets.open(GREEN_DATA_FILENAME).use { inputStream ->
@@ -33,17 +34,17 @@ class SproutDatabaseWorker(
                 val bufferedSource: BufferedSource = Okio.buffer(Okio.source(inputStream))
 
                 JsonReader.of(bufferedSource).use {jsonReader ->
-
                     // create a jsonAdapter that converts to a List of Activities
                     val moshi: Moshi = Moshi.Builder().build()
                     val listOfActivitiesType = Types.newParameterizedType(List::class.java, GreenActivity::class.java)
                     val jsonAdapter: JsonAdapter<List<GreenActivity>> = moshi.adapter(listOfActivitiesType)
 
-                    val activityList = jsonAdapter.fromJson(jsonReader)
+                    val activityList: List<GreenActivity>? = jsonAdapter.fromJson(jsonReader)
 
                     if (activityList != null) {
                         val database = BambooDatabase.getInstance(applicationContext)
                         database.activityDao().insertAllActivities(activityList)
+                        Timber.i("Succeeded in sprouting the database!")
                         Result.success()
                     }
                     else {

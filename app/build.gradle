@@ -67,7 +67,7 @@ dependencies {
     // Moshi for parsing the JSON format
     implementation "com.squareup.moshi:moshi:$moshiVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    //implementation "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
     // Joda time library for dealing with time
     //implementation "joda-time:joda-time:$jodaVersion"
@@ -93,6 +93,7 @@ dependencies {
     // testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     testImplementation "junit:junit:$rootProject.junitVersion"
 
 }

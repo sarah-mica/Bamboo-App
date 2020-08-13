@@ -3,11 +3,15 @@ package com.android.sarahmica.bamboo.addActivities
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.sarahmica.bamboo.database.GreenActivityDao
+import com.android.sarahmica.bamboo.database.*
 import kotlinx.coroutines.*
+import timber.log.Timber
 
 class AddDailyActivitiesViewModel(
-    val database: GreenActivityDao) : ViewModel() {
+    private val activityDao: GreenActivityDao,
+    private val logEntryDao: LogEntryDao,
+    private val logEntryWithActivityDao: LogEntryWithActivityDao
+) : ViewModel() {
 
     private var viewModelJob = Job()
 
@@ -24,22 +28,28 @@ class AddDailyActivitiesViewModel(
     //val activitiesList: LiveData<List<Activity>>
     //    get() = _activitiesList
 
-    //val activitiesList: LiveData<List<Activity>> = database.getAllActivities()
+    val activitiesList: LiveData<List<GreenActivity>> = activityDao.getAllActivities()
+
 
     fun doneNavigating() {
         _navigateToPandaLog.value = false
     }
 
-    //TODO: figure out how I want to add and keep track of activities in the DB
-    /*fun onAddGreenActivity(activityId: Int) {
+    fun onAddGreenActivities(activityIdList: List<Int>) {
         uiScope.launch{
             withContext(Dispatchers.IO) {
-                //TODO
+                val newEntry = LogEntry()
+                logEntryDao.insert(newEntry)
+                Timber.i("newEntry id: " + newEntry.id)
+                activityIdList.forEach {activityId ->
+                    val newEntryWithActivities = ActivityLogEntry(activityId, newEntry.id)
+                    logEntryWithActivityDao.insert(newEntryWithActivities)
+                }
 
             }
             _navigateToPandaLog.value = true
         }
-    }*/
+    }
 
 
     override fun onCleared() {

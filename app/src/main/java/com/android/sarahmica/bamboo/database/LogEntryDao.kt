@@ -5,11 +5,11 @@ import androidx.room.*
 
 @Dao
 interface LogEntryDao {
-    @Insert
-    fun insert(activity: LogEntry)
+    @Insert (onConflict = OnConflictStrategy.IGNORE)
+    fun insert(logEntry: LogEntry)
 
     @Update
-    fun update(activity: LogEntry)
+    fun update(logEntry: LogEntry)
 
     /**
      * Selects and returns the row that matches the supplied primary key
@@ -18,6 +18,8 @@ interface LogEntryDao {
      */
     @Query("SELECT * FROM log_entry_table WHERE id = :entryId")
     fun get(entryId: Long): LogEntry?
+
+    @Query("SELECT 1 FROM log_entry_table WHERE ")
 
     /**
      * Selects all the [LogEntry]'s that are of the type that matches the input type
@@ -33,6 +35,7 @@ interface LogEntryDao {
      * Sorted by the time it was entered in descending order (we might want to change this later)
      */
     @Query("SELECT * FROM log_entry_table ORDER BY id DESC")
-    fun getAllActivities(): LiveData<List<LogEntry>>
+    fun getAllEntries(): LiveData<List<LogEntry>>
+
 
 }
