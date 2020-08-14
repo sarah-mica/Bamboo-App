@@ -2,14 +2,15 @@ package com.android.sarahmica.bamboo.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import java.util.*
 
 @Dao
 interface LogEntryDao {
     @Insert (onConflict = OnConflictStrategy.IGNORE)
-    fun insert(logEntry: LogEntry)
+    suspend fun insert(logEntry: LogEntry)
 
     @Update
-    fun update(logEntry: LogEntry)
+    suspend fun update(logEntry: LogEntry)
 
     /**
      * Selects and returns the row that matches the supplied primary key
@@ -19,7 +20,15 @@ interface LogEntryDao {
     @Query("SELECT * FROM log_entry_table WHERE id = :entryId")
     fun get(entryId: Long): LogEntry?
 
-    @Query("SELECT 1 FROM log_entry_table WHERE ")
+    /**
+     * Selects and returns the entry for the supplied date.
+     * There can only be one entry per day, so we just SELECT 1
+     *
+     * @param dayStart the start time of the [Calendar] date
+     * @param dayEnd the end time of the [Calendar] date
+     */
+    @Query("SELECT * FROM log_entry_table WHERE day_completed BETWEEN :dayStart AND :dayEnd")
+    fun getEntryForDay(dayStart: Calendar, dayEnd: Calendar): LogEntry?
 
     /**
      * Selects all the [LogEntry]'s that are of the type that matches the input type

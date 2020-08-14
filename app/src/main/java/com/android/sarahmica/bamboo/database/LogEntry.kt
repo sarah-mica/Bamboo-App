@@ -1,6 +1,7 @@
 package com.android.sarahmica.bamboo.database
 
 import androidx.room.*
+import java.util.*
 
 /**
  * [LogEntry] represents all of the [GreenActivity]'s that a user has added to their
@@ -12,6 +13,6 @@ data class LogEntry (
     var id: Long = 0L,
 
     @ColumnInfo(name = "day_completed")
-    val dayCompleted: Long = System.currentTimeMillis()
+    val dayCompleted: Calendar = Calendar.getInstance()
 
 )

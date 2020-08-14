@@ -12,6 +12,7 @@ buildscript {
         junitVersion = "4.12"
         kotlinVersion = "1.3.72"
         lifecycleVersion = "2.2.0"
+        materialVersion = "1.2.0"
         moshiVersion = "1.9.3"
         navigationVersion = '2.2.0'
         retrofitVersion = "2.6.2"

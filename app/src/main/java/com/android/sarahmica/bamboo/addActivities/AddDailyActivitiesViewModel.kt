@@ -9,8 +9,7 @@ import timber.log.Timber
 
 class AddDailyActivitiesViewModel(
     private val activityDao: GreenActivityDao,
-    private val logEntryDao: LogEntryDao,
-    private val logEntryWithActivityDao: LogEntryWithActivityDao
+    private val logEntryRepository: LogEntryRepository
 ) : ViewModel() {
 
     private var viewModelJob = Job()
@@ -19,14 +18,10 @@ class AddDailyActivitiesViewModel(
 
     // Live Data properties
     private val _navigateToPandaLog = MutableLiveData<Boolean>()
-    //private val _activitiesList = MutableLiveData<List<Activity>>()
 
 
     val navigateToPandaLog: LiveData<Boolean>
         get() = _navigateToPandaLog
-
-    //val activitiesList: LiveData<List<Activity>>
-    //    get() = _activitiesList
 
     val activitiesList: LiveData<List<GreenActivity>> = activityDao.getAllActivities()
 
@@ -38,14 +33,7 @@ class AddDailyActivitiesViewModel(
     fun onAddGreenActivities(activityIdList: List<Int>) {
         uiScope.launch{
             withContext(Dispatchers.IO) {
-                val newEntry = LogEntry()
-                logEntryDao.insert(newEntry)
-                Timber.i("newEntry id: " + newEntry.id)
-                activityIdList.forEach {activityId ->
-                    val newEntryWithActivities = ActivityLogEntry(activityId, newEntry.id)
-                    logEntryWithActivityDao.insert(newEntryWithActivities)
-                }
-
+                logEntryRepository.insertLogEntry(activityIdList)
             }
             _navigateToPandaLog.value = true
         }

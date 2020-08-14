@@ -8,13 +8,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.android.sarahmica.bamboo.R
 import com.android.sarahmica.bamboo.database.BambooDatabase
 import com.android.sarahmica.bamboo.database.GreenActivity
+import com.android.sarahmica.bamboo.database.LogEntryRepository
 import com.android.sarahmica.bamboo.databinding.FragmentAddDailyActivitiesBinding
+import com.android.sarahmica.bamboo.pandalog.PandaLogFragmentDirections
 import com.google.android.material.chip.Chip
 
 class AddDailyActivitiesFragment : Fragment() {
+
+    private lateinit var binding: FragmentAddDailyActivitiesBinding
+    private lateinit var viewModel: AddDailyActivitiesViewModel
 
     /**
      * Called when the fragment is ready to display content on the screen
@@ -24,18 +30,19 @@ class AddDailyActivitiesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Get a reference to the binding object and inflate the fragment views
-        val binding: FragmentAddDailyActivitiesBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_add_daily_activities, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_daily_activities, container, false)
 
         val application = requireNotNull(this.activity).application
         val activityDao = BambooDatabase.getInstance(application).activityDao()
-        val logEntryDao = BambooDatabase.getInstance(application).logEntryDao()
-        val logEntryActivityDao = BambooDatabase.getInstance(application).logEntryWithActivitiesDao()
+        val logEntryRepository = LogEntryRepository.getInstance(
+            BambooDatabase.getInstance(application).logEntryDao(),
+            BambooDatabase.getInstance(application).logEntryWithActivitiesDao())
 
-        val viewModelFactory = AddDailyActivitiesViewModelFactory(activityDao, logEntryDao, logEntryActivityDao)
+        val viewModelFactory = AddDailyActivitiesViewModelFactory(activityDao, logEntryRepository)
 
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(AddDailyActivitiesViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(AddDailyActivitiesViewModel::class.java)
 
+        // Create chips for all the activities in the DB
         viewModel.activitiesList.observe(viewLifecycleOwner, object: Observer<List<GreenActivity>> {
             override fun onChanged(data: List<GreenActivity>?) {
                 data ?: return
@@ -47,10 +54,6 @@ class AddDailyActivitiesFragment : Fragment() {
                     val chip = inflater.inflate(R.layout.green_activity_chip, chipGroup, false) as Chip
                     chip.text = activity.activityName
                     chip.tag = activity.activityId
-                    /*chip.setOnCheckedChangeListener { button, isChecked ->
-                        TODO("what to do when an activity is selected?")
-                    }*/
-
                     chip
                 }
 
@@ -62,8 +65,39 @@ class AddDailyActivitiesFragment : Fragment() {
             }
         })
 
+        binding.submitButton.setOnClickListener {
+            addLogEntry()
+        }
+
+        viewModel.navigateToPandaLog.observe(viewLifecycleOwner, Observer { shouldNavigate ->
+            if (shouldNavigate) {
+                val navController = binding.root.findNavController()
+                navController.navigate(
+                    AddDailyActivitiesFragmentDirections
+                        .actionAddDailyActivitiesFragmentToPandaLogFragment()
+                )
+
+                viewModel.doneNavigating()
+            }
+        })
+
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding.root
+    }
+
+    private fun addLogEntry() {
+        // Get the list of all the selected "activity" chips
+        val ids: List<Int> = binding.wasteActionsList.checkedChipIds
+        var tags: MutableList<Int> = mutableListOf()
+
+        // the tags of each chip will be the activityId of that DB activity
+        for (id in ids) {
+            val chip: Chip = binding.wasteActionsList.findViewById(id)
+            tags.add(chip.tag as Int)
+        }
+
+        // once we have this list, just let the viewModel take care of inserting all this to the DB
+        viewModel.onAddGreenActivities(tags)
     }
 }

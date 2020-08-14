@@ -8,9 +8,8 @@ import androidx.room.Query
 
 @Dao
 interface GreenActivityDao {
-    //TODO: add suspend back?
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllActivities(greenActivities: List<GreenActivity>)
+    suspend fun insertAllActivities(greenActivities: List<GreenActivity>)
 
     @Query("SELECT * FROM green_activities ORDER BY activity_type")
     fun getAllActivities(): LiveData<List<GreenActivity>>

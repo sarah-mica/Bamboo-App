@@ -47,6 +47,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.fragment:fragment:$fragmentVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "com.google.android.material:material:$materialVersion"
 
     // Android KTX
     implementation "androidx.core:core-ktx:$coreVersion"
@@ -85,6 +86,7 @@ dependencies {
 
     // Room database
     implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
 
     // WorkManager

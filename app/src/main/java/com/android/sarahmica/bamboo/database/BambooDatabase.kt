@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -19,8 +20,9 @@ import timber.log.Timber
  */
 @Database(
     entities = [LogEntry::class, GreenActivity::class, ActivityLogEntry::class],
-    version = 2,
+    version = 3,
     exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class BambooDatabase : RoomDatabase(){
 
     /**
@@ -68,6 +70,8 @@ abstract class BambooDatabase : RoomDatabase(){
                         WorkManager.getInstance().enqueue(request)
                     }
                 })
+                //TODO: I should probably create a better migration scheme at some point...
+                .fallbackToDestructiveMigration()
                 .build()
         }
 

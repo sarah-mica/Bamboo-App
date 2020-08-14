@@ -4,6 +4,10 @@ import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.android.sarahmica.bamboo.database.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.junit.After
 
 import org.junit.runner.RunWith
@@ -13,6 +17,8 @@ import org.junit.Before
 import org.junit.Test
 import timber.log.Timber
 import java.io.IOException
+import java.util.*
+import java.util.Calendar.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -48,19 +54,45 @@ class BambooDatabaseTest {
 
 
     @Test
-    fun insertAndGetEntry() {
-        val logEntry = LogEntry()
-        logEntryDao.insert(logEntry)
+    fun insertAndGetEntry() = runBlocking {
+
+        // first insert a new log entry
+        var logEntry: LogEntry? = LogEntry()
+        logEntryDao.insert(logEntry!!)
+
         assert(logEntry.id != 0L)
         Timber.i("logEntry id: " + logEntry.id)
-        logEntry = logEntryDao.get()
+
+        val dayStart: Calendar = Calendar.getInstance().apply {
+            set(HOUR, 0)
+            set(MINUTE, 0)
+            set(SECOND, 0)
+            set(MILLISECOND, 0)
+            set(AM_PM, AM)
+        }
+        val dayEnd: Calendar = Calendar.getInstance().apply {
+            set(HOUR, 11)
+            set(MINUTE, 59)
+            set(SECOND, 59)
+            set(MILLISECOND, 999)
+            set(AM_PM, PM)
+        }
+
+        logEntry = logEntryDao.getEntryForDay(dayStart, dayEnd)
+        assert(logEntry != null)
+        Timber.i("logEntry id: " + logEntry!!.id)
+
+        // Now insert a logEntry with all its associated activities
         val logEntryWithActivities = ActivityLogEntry(1, logEntry.id)
         logEntryWithActivityDao.insert(logEntryWithActivities)
-        val retrievedEntryWithActivities = logEntryWithActivityDao.getLogEntriesWithActivities()
 
-        assertEquals("log entry ids do not match", logEntry.id, retrievedEntryWithActivities.value?.get(0)?.logEntry?.id)
+        val retrievedEntryWithActivities = logEntryWithActivityDao.getLogEntryWithActivities(dayStart, dayEnd)
+        assert(retrievedEntryWithActivities != null)
+
+        assertEquals("log entry ids do not match", logEntry.id, retrievedEntryWithActivities!!.logEntry.id)
+        assert(retrievedEntryWithActivities.greenActivityList != null)
         assertEquals("activity id inserted does not match", 1,
-            retrievedEntryWithActivities.value?.get(0)?.greenActivityList?.get(0)?.activityId
+            retrievedEntryWithActivities.greenActivityList.get(0).activityId
         )
     }
 }
