@@ -1,5 +1,6 @@
 package com.android.sarahmica.bamboo.addActivities
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +10,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.android.sarahmica.bamboo.ActivityType
 import com.android.sarahmica.bamboo.R
 import com.android.sarahmica.bamboo.database.BambooDatabase
 import com.android.sarahmica.bamboo.database.GreenActivity
 import com.android.sarahmica.bamboo.database.LogEntryRepository
 import com.android.sarahmica.bamboo.databinding.FragmentAddDailyActivitiesBinding
-import com.android.sarahmica.bamboo.pandalog.PandaLogFragmentDirections
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import timber.log.Timber
 
+@Suppress("DEPRECATION")
 class AddDailyActivitiesFragment : Fragment() {
 
     private lateinit var binding: FragmentAddDailyActivitiesBinding
@@ -43,25 +47,31 @@ class AddDailyActivitiesFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(AddDailyActivitiesViewModel::class.java)
 
         // Create chips for all the activities in the DB
-        viewModel.activitiesList.observe(viewLifecycleOwner, object: Observer<List<GreenActivity>> {
+        viewModel.wasteActivitiesList.observe(viewLifecycleOwner, object: Observer<List<GreenActivity>> {
             override fun onChanged(data: List<GreenActivity>?) {
                 data ?: return
+                populateChipGroup(data, ActivityType.WASTE)
+            }
+        })
 
-                val chipGroup = binding.wasteActionsList
-                val inflater = LayoutInflater.from(chipGroup.context)
+        viewModel.energyActivitiesList.observe(viewLifecycleOwner, object: Observer<List<GreenActivity>> {
+            override fun onChanged(data: List<GreenActivity>?) {
+                data ?: return
+                populateChipGroup(data, ActivityType.ENERGY)
+            }
+        })
 
-                val children = data.map { activity ->
-                    val chip = inflater.inflate(R.layout.green_activity_chip, chipGroup, false) as Chip
-                    chip.text = activity.activityName
-                    chip.tag = activity.activityId
-                    chip
-                }
+        viewModel.waterActivitiesList.observe(viewLifecycleOwner, object: Observer<List<GreenActivity>> {
+            override fun onChanged(data: List<GreenActivity>?) {
+                data ?: return
+                populateChipGroup(data, ActivityType.WATER)
+            }
+        })
 
-                chipGroup.removeAllViews()
-
-                for (chip in children) {
-                    chipGroup.addView(chip)
-                }
+        viewModel.activismActivitiesList.observe(viewLifecycleOwner, object: Observer<List<GreenActivity>> {
+            override fun onChanged(data: List<GreenActivity>?) {
+                data ?: return
+                populateChipGroup(data, ActivityType.ACTIVISM)
             }
         })
 
@@ -100,4 +110,51 @@ class AddDailyActivitiesFragment : Fragment() {
         // once we have this list, just let the viewModel take care of inserting all this to the DB
         viewModel.onAddGreenActivities(tags)
     }
+
+    private fun populateChipGroup(activityList: List<GreenActivity>, type: ActivityType) {
+
+        val chipGroup = getChipGroup(type)
+        val inflater = LayoutInflater.from(chipGroup.context)
+
+        val children = activityList.map { activity ->
+            val chip = inflater.inflate(R.layout.green_activity_chip, chipGroup, false) as Chip
+            chip.text = activity.activityName
+            chip.tag = activity.activityId
+            chip.chipBackgroundColor = getChipColor(type)
+            chip
+        }
+
+        chipGroup.removeAllViews()
+
+        for (chip in children) {
+            chipGroup.addView(chip)
+        }
+    }
+
+    private fun getChipGroup(type: ActivityType): ChipGroup  {
+        return when(type) {
+            ActivityType.WASTE -> binding.wasteActionsList
+            ActivityType.ENERGY -> binding.energyActionsList
+            ActivityType.WATER -> binding.waterActionsList
+            ActivityType.ACTIVISM -> binding.activismActionsList
+            else -> {
+                Timber.e("Unknown ActivityType!")
+                binding.activismActionsList
+            }
+        }
+    }
+
+    private fun getChipColor(type: ActivityType): ColorStateList? {
+        return when(type) {
+            ActivityType.WASTE -> resources.getColorStateList(R.color.waste_chip_color_state_list)
+            ActivityType.ENERGY -> resources.getColorStateList(R.color.energy_chip_color_state_list)
+            ActivityType.WATER -> resources.getColorStateList(R.color.water_chip_color_state_list)
+            ActivityType.ACTIVISM -> resources.getColorStateList(R.color.activism_chip_color_state_list)
+            else -> {
+                Timber.e("Unknown ActivityType!")
+                resources.getColorStateList(R.color.activism_chip_color_state_list)
+            }
+        }
+    }
+
 }

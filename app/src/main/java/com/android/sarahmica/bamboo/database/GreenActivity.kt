@@ -3,6 +3,8 @@ package com.android.sarahmica.bamboo.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.android.sarahmica.bamboo.ActivityType
 import com.squareup.moshi.JsonClass
 
 @Entity(tableName = "green_activities")
@@ -19,7 +21,7 @@ data class GreenActivity (
 
     // What group of activities does this belong to?
     @ColumnInfo(name = "activity_type")
-    val activityType: String,
+    val activityType: ActivityType,
 
     // How much many "panda points" is this activity worth?
     @ColumnInfo(name = "point_value")

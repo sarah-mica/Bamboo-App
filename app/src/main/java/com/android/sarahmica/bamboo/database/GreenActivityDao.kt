@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.android.sarahmica.bamboo.ActivityType
 
 @Dao
 interface GreenActivityDao {
@@ -15,7 +16,7 @@ interface GreenActivityDao {
     fun getAllActivities(): LiveData<List<GreenActivity>>
 
     @Query("SELECT * FROM green_activities WHERE activity_type = :type ORDER BY activity_name")
-    fun getAllActivitiesByType(type: String): LiveData<List<GreenActivity>>
+    fun getAllActivitiesByType(type: ActivityType): LiveData<List<GreenActivity>>
 
     @Query("SELECT COUNT(*) FROM green_activities")
     fun getNumActivities(): Int

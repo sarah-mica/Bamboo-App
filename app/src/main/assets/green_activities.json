@@ -19,60 +19,66 @@
   },
   {
     "activityId": 4,
-    "activityName": "limited ac or heat usage",
+    "activityName": "carpool",
     "activityType": "energy",
     "pointValue": 10
   },
   {
     "activityId": 5,
+    "activityName": "limit ac",
+    "activityType": "energy",
+    "pointValue": 10
+  },
+  {
+    "activityId": 6,
     "activityName": "took a shorter shower",
     "activityType": "water",
     "pointValue": 10
   },
   {
-    "activityId": 6,
+    "activityId": 7,
     "activityName": "buy used products",
     "activityType": "waste",
     "pointValue": 15
   },
   {
-    "activityId": 7,
+    "activityId": 8,
     "activityName": "compost food",
     "activityType": "waste",
     "pointValue": 10
   },
   {
-    "activityId": 8,
+    "activityId": 9,
     "activityName": "donate to a cause",
     "activityType": "activism",
     "pointValue": 10
   },
   {
-    "activityId": 9,
-    "activityName": "convinced a friend to make a positive change",
+    "activityId": 10,
+    "activityName": "convinced a friend",
     "activityType": "activism",
     "pointValue": 50
   },
   {
-    "activityId": 10,
+    "activityId": 11,
     "activityName": "plant trees",
     "activityType": "activism",
     "pointValue": 25
   },
   {
-    "activityId": 11,
+    "activityId": 12,
     "activityName": "garbage cleanup",
     "activityType": "activism",
     "pointValue": 40
   },
   {
-    "activityId": 12,
+    "activityId": 13,
     "activityName": "saved leftovers",
     "activityType": "waste",
     "pointValue": 10
   },
   {
-    "activityId": 13,
+    "activityId": 14,
     "activityName": "stopped a leaky tap",
     "activityType": "water",
     "pointValue": 10

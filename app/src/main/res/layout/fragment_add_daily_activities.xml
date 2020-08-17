@@ -16,7 +16,11 @@
             android:id="@+id/positiveActionsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/spacing_bigger"
+            android:textSize="@dimen/textSizeHeader"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
             android:text="@string/add_activities_prompt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,70 +36,122 @@
             app:layout_constraintBottom_toTopOf="@id/submitButton">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wasteHeader"
+                    android:textSize="22sp"
+                    android:layout_margin="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_bigger"/>
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/wasteActionsList"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginEnd="32dp"
-                    app:chipSpacing="8dp"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/positiveActionsTitle"
-                    app:layout_constraintBottom_toBottomOf="@id/energyActionsList"/>
+                    app:layout_constraintBottom_toTopOf="@id/energyActionsList">
 
                 <!-- I only use this to visualize what the chip group will look like
                 <com.google.android.material.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:checkable="true"
+                        app:chipIconEnabled="true"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        app:chipBackgroundColor="@color/waste_chip_color_state_list"
+                        tools:text="Green Activity"/>
+                    <com.google.android.material.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:checkable="true"
+                        app:chipIconEnabled="true"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        app:chipBackgroundColor="@color/colorPrimary"
+                        tools:text="Green Activity"/>
+                    <com.google.android.material.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:checkable="true"
+                        app:chipIconEnabled="true"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        app:chipBackgroundColor="@color/waste_chip_color_state_list"
+                        android:checked="true"
+                        tools:text="Green Activity"/>-->
+                </com.google.android.material.chip.ChipGroup>
+
+                <!--<View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_margin="@dimen/spacing_bigger"/> -->
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Chip"
-                    app:chipBackgroundColor="@color/colorPrimary"
-                    tools:text="Chip 1"/> -->
+                    android:text="@string/energyHeader"
+                    android:textSize="@dimen/textSizeDefault"
+                    android:layout_margin="@dimen/spacing_normal" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/energyActionsList"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginEnd="32dp"
-                    app:chipSpacing="8dp"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    app:layout_constraintBottom_toTopOf="@id/waterActionsList"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/wasteActionsList"
-                    app:layout_constraintBottom_toBottomOf="@id/waterActionsList"/>
+                    app:layout_constraintTop_toBottomOf="@id/wasteActionsList">
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/waterHeader"
+                    android:textSize="@dimen/textSizeDefault"
+                    android:layout_margin="@dimen/spacing_normal" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/waterActionsList"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginEnd="32dp"
-                    app:chipSpacing="8dp"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/energyActionsList"
-                    app:layout_constraintBottom_toBottomOf="@id/activismActionsList"/>
+                    app:layout_constraintBottom_toTopOf="@id/activismActionsList"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activismHeader"
+                    android:textSize="@dimen/textSizeDefault"
+                    android:layout_margin="@dimen/spacing_normal" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/activismActionsList"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginEnd="32dp"
-                    app:chipSpacing="8dp"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/waterActionsList"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@id/waterActionsList" />
+
+
 
             </LinearLayout>
         </ScrollView>
@@ -105,7 +161,7 @@
             android:id="@+id/submitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_default"
+            android:layout_margin="@dimen/spacing_bigger"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

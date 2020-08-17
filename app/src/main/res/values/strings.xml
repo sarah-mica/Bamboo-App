@@ -2,5 +2,9 @@
 <resources>
     <string name="app_name">Bamboo</string>
     <string name="submit_button">Submit</string>
-    <string name="add_activities_prompt">What green actions did you take today?</string>
+    <string name="add_activities_prompt">What \"Green\" Actions Did You Do Today?</string>
+    <string name="energyHeader">Energy</string>
+    <string name="waterHeader">Water Conservation</string>
+    <string name="activismHeader"><![CDATA[Activism & Volunteering]]></string>
+    <string name="wasteHeader">Waste Reduction</string>
 </resources>

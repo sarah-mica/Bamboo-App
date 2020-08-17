@@ -5,7 +5,7 @@ import java.util.*
 
 /**
  * [LogEntry] represents all of the [GreenActivity]'s that a user has added to their
- * "pandalog"
+ * "panda log"
  */
 @Entity(tableName = "log_entry_table")
 data class LogEntry (

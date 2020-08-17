@@ -4,6 +4,11 @@
 
     <dimen name="progressBar_width_small">65dp</dimen>
     <dimen name="design_fab_image_size" tools:override="true">36dp</dimen>
-    <dimen name="margin_default">16dp</dimen>
+    <dimen name="spacing_bigger">16dp</dimen>
+    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="spacing_large">32dp</dimen>
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="textSizeDefault">22sp</dimen>
+    <dimen name="textSizeHeader">32sp</dimen>
 
 </resources>

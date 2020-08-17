@@ -3,6 +3,7 @@ package com.android.sarahmica.bamboo.addActivities
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.android.sarahmica.bamboo.ActivityType
 import com.android.sarahmica.bamboo.database.*
 import kotlinx.coroutines.*
 import timber.log.Timber
@@ -23,8 +24,10 @@ class AddDailyActivitiesViewModel(
     val navigateToPandaLog: LiveData<Boolean>
         get() = _navigateToPandaLog
 
-    val activitiesList: LiveData<List<GreenActivity>> = activityDao.getAllActivities()
-
+    val wasteActivitiesList: LiveData<List<GreenActivity>> = activityDao.getAllActivitiesByType(ActivityType.WASTE)
+    val energyActivitiesList: LiveData<List<GreenActivity>> = activityDao.getAllActivitiesByType(ActivityType.ENERGY)
+    val waterActivitiesList: LiveData<List<GreenActivity>> = activityDao.getAllActivitiesByType(ActivityType.WATER)
+    val activismActivitiesList: LiveData<List<GreenActivity>> = activityDao.getAllActivitiesByType(ActivityType.ACTIVISM)
 
     fun doneNavigating() {
         _navigateToPandaLog.value = false
@@ -37,6 +40,11 @@ class AddDailyActivitiesViewModel(
             }
             _navigateToPandaLog.value = true
         }
+    }
+
+    private fun retrieveActivities(): LiveData<List<GreenActivity>> {
+        Timber.i("Retrieving activities!")
+        return activityDao.getAllActivities()
     }
 
 
