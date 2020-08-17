@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true"
+          android:color="@color/waterActivityLight" />
     <item android:color="@color/waterActivity"/>
-    <item android:color="@color/waterActivityLight" android:state_checked="true" />
 </selector>

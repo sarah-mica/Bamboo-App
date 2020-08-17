@@ -7,11 +7,11 @@
 
     <!-- Colors for the chips on the "Add New Activity" page -->
     <color name="wasteActivity">#6200EE</color>
-    <color name="wasteActivityLight">#8844EA</color>
-    <color name="energyActivity">#2DD335</color>
-    <color name="energyActivityLight">#A0F4A4</color>
-    <color name="waterActivity">#1CD4EC</color>
-    <color name="waterActivityLight">#86DCE8</color>
+    <color name="wasteActivityLight">#7B5DC3</color>
+    <color name="energyActivity">#14C61D</color>
+    <color name="energyActivityLight">#6DD372</color>
+    <color name="waterActivity">#09BFD6</color>
+    <color name="waterActivityLight">#8DD8E3</color>
     <color name="activismActivity">#AB47BC</color>
     <color name="activismActivityLight">#D681E4</color>
 </resources>

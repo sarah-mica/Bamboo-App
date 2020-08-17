@@ -40,6 +40,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/testChipGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/positiveActionsTitle"
+                    app:layout_constraintBottom_toTopOf="@id/wasteActionsList">
+
+                    <com.google.android.material.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:clickable="true"
+                        app:chipIconEnabled="true"
+                        android:text="testing"
+                        android:checked="true"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        app:chipBackgroundColor="@color/waste_chip_color_state_list"
+                        tools:text="Green Activity"
+                        android:focusable="true" />
+                </com.google.android.material.chip.ChipGroup>
+
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,7 +80,7 @@
                     android:layout_marginEnd="@dimen/spacing_large"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/positiveActionsTitle"
+                    app:layout_constraintTop_toBottomOf="@id/testChipGroup"
                     app:layout_constraintBottom_toTopOf="@id/energyActionsList">
 
                 <!-- I only use this to visualize what the chip group will look like
@@ -87,7 +111,7 @@
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         app:chipBackgroundColor="@color/waste_chip_color_state_list"
                         android:checked="true"
-                        tools:text="Green Activity"/>-->
+                        tools:text="Green Activity"/> -->
                 </com.google.android.material.chip.ChipGroup>
 
                 <!--<View

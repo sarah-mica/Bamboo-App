@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true"
+          android:color="@color/activismActivityLight" />
     <item android:color="@color/activismActivity"/>
-    <item android:color="@color/activismActivityLight" android:state_checked="true" />
 </selector>
