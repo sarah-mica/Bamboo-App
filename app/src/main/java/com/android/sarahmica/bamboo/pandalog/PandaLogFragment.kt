@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.android.sarahmica.bamboo.database.BambooDatabase
 import com.android.sarahmica.bamboo.databinding.FragmentPandaLogBinding
 import com.android.sarahmica.bamboo.R
+import com.android.sarahmica.bamboo.database.LogEntryRepository
 
 
 class PandaLogFragment : Fragment() {
@@ -28,9 +29,10 @@ class PandaLogFragment : Fragment() {
             inflater, R.layout.fragment_panda_log, container, false)
 
         val application = requireNotNull(this.activity).application
-        val logEntryDao = BambooDatabase.getInstance(application).logEntryDao()
-        val logEntryActivityDao = BambooDatabase.getInstance(application).logEntryWithActivitiesDao()
-        val viewModelFactory = PandaLogViewModelFactory(logEntryDao, logEntryActivityDao, application)
+        val logEntryRepository = LogEntryRepository.getInstance(
+            BambooDatabase.getInstance(application).logEntryDao(),
+            BambooDatabase.getInstance(application).logEntryWithActivitiesDao())
+        val viewModelFactory = PandaLogViewModelFactory(logEntryRepository, application)
 
         val pandaLogViewModel = ViewModelProvider(this, viewModelFactory).get(PandaLogViewModel::class.java)
 

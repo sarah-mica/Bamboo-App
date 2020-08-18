@@ -5,6 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.sarahmica.bamboo.database.LogEntryDao
+import com.android.sarahmica.bamboo.database.LogEntryRepository
+import com.android.sarahmica.bamboo.database.LogEntryWithActivities
 import com.android.sarahmica.bamboo.database.LogEntryWithActivityDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,8 +14,7 @@ import kotlinx.coroutines.Job
 import timber.log.Timber
 
 class PandaLogViewModel(
-    val logEntryDao: LogEntryDao,
-    val logEntryActivityDao: LogEntryWithActivityDao,
+    val logEntryRepository: LogEntryRepository,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -21,7 +22,7 @@ class PandaLogViewModel(
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    //TODO: what things do I need to show on the for the main view?
+    val logEntries: LiveData<List<LogEntryWithActivities>> = logEntryRepository.getAllLogEntries()
 
     private val _navigateToAddScreen = MutableLiveData<Boolean>()
     val navigateToAddScreen: LiveData<Boolean>
@@ -60,11 +61,10 @@ class PandaLogViewModel(
     }
 
     private fun initializeProgressBars() {
-        //TODO: these set values are just to visualize for now, set to 0 later
-        _pandaScore.value = 100
+        _pandaScore.value = 0
         _plasticScore.value = 0
         _energyScore.value = 0
-        _waterScore.value = 20
+        _waterScore.value = 0
         _activismScore.value = 0
     }
 

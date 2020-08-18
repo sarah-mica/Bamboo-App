@@ -1,5 +1,6 @@
 package com.android.sarahmica.bamboo.database
 
+import androidx.lifecycle.LiveData
 import timber.log.Timber
 import java.util.*
 
@@ -39,6 +40,11 @@ class LogEntryRepository private constructor(
         }
 
     }
+
+    fun getAllLogEntries(): LiveData<List<LogEntryWithActivities>> {
+        return logEntryWithActivityDao.getAllLogEntriesWithActivities()
+    }
+
 
     companion object {
         // For Singleton instantiation
