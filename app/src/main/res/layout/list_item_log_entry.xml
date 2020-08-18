@@ -12,30 +12,7 @@
             type="com.android.sarahmica.bamboo.database.LogEntryWithActivities"/>
     </data>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_drop"
-        tools:layout_editor_absoluteY="4dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="17dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="47dp" />
-
-    <com.google.samples.apps.sunflower.views.MaskedCardView
+    <com.android.sarahmica.bamboo.MaskedCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/card_side_margin"
@@ -44,7 +21,7 @@
         android:onClick="@{clickListener}"
         app:cardElevation="@dimen/card_elevation"
         app:cardPreventCornerOverlap="false"
-        shapeApp>
+        app:shapeAppearanceOverlay="@style/AppTheme.Card">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -53,32 +30,33 @@
             <ImageView
                 android:id="@+id/plant_item_image"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/plant_item_image_height"
-                android:contentDescription="@string/a11y_plant_item_image"
+                android:layout_height="@dimen/log_entry_item_image_height"
+                android:contentDescription="log entry primary green activity image"
                 android:scaleType="centerCrop"
-                app:imageFromUrl="@{plant.imageUrl}"
+                app:imageFromUrl="@{logEntry.imageUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <! -- TODO: figure out what text I want to display, figure out how to format the date -->
             <TextView
                 android:id="@+id/plant_item_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_normal"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:text="@{plant.name}"
+                android:layout_marginBottom="@dimen/spacing_normal"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:text="@{logEntry.logEntry.dayCompleted}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:gravity="center_horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/plant_item_image"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="Tomato"/>
+                tools:text="Sample Log Entry text"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.samples.apps.sunflower.views.MaskedCardView>
+    </com.android.sarahmica.bamboo.MaskedCardView>
 
 
 </layout>
