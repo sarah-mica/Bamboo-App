@@ -42,11 +42,6 @@ class AddDailyActivitiesViewModel(
         }
     }
 
-    private fun retrieveActivities(): LiveData<List<GreenActivity>> {
-        Timber.i("Retrieving activities!")
-        return activityDao.getAllActivities()
-    }
-
 
     override fun onCleared() {
         super.onCleared()

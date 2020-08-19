@@ -13,9 +13,12 @@ import com.android.sarahmica.bamboo.database.BambooDatabase
 import com.android.sarahmica.bamboo.databinding.FragmentPandaLogBinding
 import com.android.sarahmica.bamboo.R
 import com.android.sarahmica.bamboo.database.LogEntryRepository
+import timber.log.Timber
 
 
 class PandaLogFragment : Fragment() {
+
+    private lateinit var pandaLogViewModel: PandaLogViewModel
 
     /**
      * Called when the fragment is ready to display content on the screen
@@ -34,7 +37,11 @@ class PandaLogFragment : Fragment() {
             BambooDatabase.getInstance(application).logEntryWithActivitiesDao())
         val viewModelFactory = PandaLogViewModelFactory(logEntryRepository, application)
 
-        val pandaLogViewModel = ViewModelProvider(this, viewModelFactory).get(PandaLogViewModel::class.java)
+        pandaLogViewModel = ViewModelProvider(this, viewModelFactory).get(PandaLogViewModel::class.java)
+
+        val adapter = LogEntryAdapter()
+        binding.logEntryList.adapter = adapter
+        subscribeUi(adapter)
 
         binding.lifecycleOwner = this
         binding.pandaLogViewModel = pandaLogViewModel
@@ -50,5 +57,12 @@ class PandaLogFragment : Fragment() {
             })
 
         return binding.root
+    }
+
+    private fun subscribeUi(adapter: LogEntryAdapter) {
+        pandaLogViewModel.logEntries.observe(viewLifecycleOwner, Observer { logEntries ->
+            Timber.i("submitting list to adapter!")
+            adapter.submitList(logEntries)
+        })
     }
 }

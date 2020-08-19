@@ -26,31 +26,40 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/logEntryDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/logImage"
+                tools:text="Monday, August 18, 2020"
+                />
 
             <ImageView
-                android:id="@+id/plant_item_image"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/log_entry_item_image_height"
-                android:contentDescription="log entry primary green activity image"
-                android:scaleType="centerCrop"
-                app:imageFromUrl="@{logEntry.imageUrl}"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/logImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/btn_star_big_on"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toStartOf="@id/logEntryActivityList"
+                app:layout_constraintTop_toBottomOf="@id/logEntryDate"
+                android:contentDescription="TODO" />
 
-            <! -- TODO: figure out what text I want to display, figure out how to format the date -->
+
             <TextView
-                android:id="@+id/plant_item_title"
+                android:id="@+id/logEntryActivityList"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/spacing_normal"
                 android:layout_marginTop="@dimen/spacing_normal"
-                android:text="@{logEntry.logEntry.dayCompleted}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:gravity="center_horizontal"
+                android:text="@{logEntry.greenActivityList.toString()}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/plant_item_image"
+                app:layout_constraintStart_toEndOf="@id/logImage"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="Sample Log Entry text"/>
 

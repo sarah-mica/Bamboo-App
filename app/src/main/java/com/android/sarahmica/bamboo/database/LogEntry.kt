@@ -10,7 +10,7 @@ import java.util.*
 @Entity(tableName = "log_entry_table")
 data class LogEntry (
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0L,
+    var logEntryId: Long = 0L,
 
     @ColumnInfo(name = "day_completed")
     val dayCompleted: Calendar = Calendar.getInstance()

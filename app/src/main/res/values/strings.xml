@@ -7,4 +7,5 @@
     <string name="waterHeader">Water Conservation</string>
     <string name="activismHeader"><![CDATA[Activism & Volunteering]]></string>
     <string name="wasteHeader">Waste Reduction</string>
+    <string name="log_entry_primary_green_activity_image">log entry primary green activity image</string>
 </resources>

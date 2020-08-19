@@ -9,17 +9,13 @@ import androidx.room.Relation
  */
 data class LogEntryWithActivities (
     @Embedded
-    val logEntry:LogEntry,
+    val logEntry: LogEntry,
 
     @Relation(
-        parentColumn = "id",
+        parentColumn = "logEntryId",
         entity = GreenActivity::class,
-        entityColumn = "id",
-        associateBy = Junction(
-            value = ActivityLogEntry::class,
-            parentColumn = "logEntryId",
-            entityColumn = "greenActivityId"
-        )
+        entityColumn = "activityId",
+        associateBy = Junction(ActivityLogEntry::class)
     )
     val greenActivityList: List<GreenActivity>
 

@@ -7,17 +7,21 @@ import java.util.*
 @Dao
 interface LogEntryDao {
     @Insert (onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(logEntry: LogEntry)
+    suspend fun insert(logEntry: LogEntry): Long
 
     @Update
     suspend fun update(logEntry: LogEntry)
+
+    /**
+     *
+     */
 
     /**
      * Selects and returns the row that matches the supplied primary key
      *
      * @param entryId the id value for the entry we want to look up
      */
-    @Query("SELECT * FROM log_entry_table WHERE id = :entryId")
+    @Query("SELECT * FROM log_entry_table WHERE logEntryId = :entryId")
     fun get(entryId: Long): LogEntry?
 
     /**
@@ -43,7 +47,7 @@ interface LogEntryDao {
      * Selects and returns all rows in the table
      * Sorted by the time it was entered in descending order (we might want to change this later)
      */
-    @Query("SELECT * FROM log_entry_table ORDER BY id DESC")
+    @Query("SELECT * FROM log_entry_table ORDER BY logEntryId DESC")
     fun getAllEntries(): LiveData<List<LogEntry>>
 
 

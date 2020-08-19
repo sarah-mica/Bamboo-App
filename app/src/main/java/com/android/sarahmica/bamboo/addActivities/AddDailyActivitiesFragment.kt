@@ -98,8 +98,12 @@ class AddDailyActivitiesFragment : Fragment() {
 
     private fun addLogEntry() {
         // Get the list of all the selected "activity" chips
-        val ids: List<Int> = binding.wasteActionsList.checkedChipIds
+        var ids: MutableList<Int> = binding.wasteActionsList.checkedChipIds
         var tags: MutableList<Int> = mutableListOf()
+
+        ids.addAll(binding.energyActionsList.checkedChipIds)
+        ids.addAll(binding.waterActionsList.checkedChipIds)
+        ids.addAll(binding.activismActionsList.checkedChipIds)
 
         // the tags of each chip will be the activityId of that DB activity
         for (id in ids) {

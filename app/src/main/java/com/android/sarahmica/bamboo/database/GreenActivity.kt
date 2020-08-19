@@ -12,7 +12,6 @@ import com.squareup.moshi.JsonClass
 data class GreenActivity (
 
     @PrimaryKey
-    @ColumnInfo(name = "id")
     val activityId: Int,
 
     // What is the name of the activity that we'll display to the user?

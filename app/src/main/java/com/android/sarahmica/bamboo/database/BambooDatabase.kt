@@ -20,7 +20,7 @@ import timber.log.Timber
  */
 @Database(
     entities = [LogEntry::class, GreenActivity::class, ActivityLogEntry::class],
-    version = 4,
+    version = 5,
     exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class BambooDatabase : RoomDatabase(){

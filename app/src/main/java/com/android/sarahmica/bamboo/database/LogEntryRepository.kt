@@ -12,8 +12,8 @@ class LogEntryRepository private constructor(
 
         // first insert a new log entry
         var logEntry: LogEntry? = LogEntry()
-        logEntryDao.insert(logEntry!!)
-        Timber.i("logEntry id: %s", logEntry.id)
+        val logEntryId: Long = logEntryDao.insert(logEntry!!)
+        Timber.i("logEntry id: %s", logEntryId)
 
         val dayStart: Calendar = Calendar.getInstance().apply {
             set(Calendar.HOUR, 0)
@@ -30,12 +30,9 @@ class LogEntryRepository private constructor(
             set(Calendar.AM_PM, Calendar.PM)
         }
 
-        logEntry = logEntryDao.getEntryForDay(dayStart, dayEnd)
-        Timber.i("logEntry id: %s", logEntry!!.id)
-
         // Now insert a logEntry with all its associated activities
         activityList.forEach { activityId ->
-            val logEntryWithActivities = ActivityLogEntry(activityId, logEntry.id)
+            val logEntryWithActivities = ActivityLogEntry(activityId, logEntryId)
             logEntryWithActivityDao.insert(logEntryWithActivities)
         }
 
