@@ -54,11 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_large"
-                    android:layout_marginEnd="@dimen/spacing_large"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/positiveActionsTitle"
-                    app:layout_constraintBottom_toTopOf="@id/energyActionsList">
+                    android:layout_marginEnd="@dimen/spacing_large" />
 
                 <!-- I only use this to visualize what the chip group will look like
                 <com.google.android.material.chip.Chip
@@ -89,7 +85,6 @@
                         app:chipBackgroundColor="@color/waste_chip_color_state_list"
                         android:checked="true"
                         tools:text="Green Activity"/> -->
-                </com.google.android.material.chip.ChipGroup>
 
                 <!--<View
                     android:layout_width="match_parent"
@@ -109,12 +104,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_large"
-                    android:layout_marginEnd="@dimen/spacing_large"
-                    app:layout_constraintBottom_toTopOf="@id/waterActionsList"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/wasteActionsList">
-                </com.google.android.material.chip.ChipGroup>
+                    android:layout_marginEnd="@dimen/spacing_large" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -128,11 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_large"
-                    android:layout_marginEnd="@dimen/spacing_large"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/energyActionsList"
-                    app:layout_constraintBottom_toTopOf="@id/activismActionsList"/>
+                    android:layout_marginEnd="@dimen/spacing_large" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -146,13 +132,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_large"
-                    android:layout_marginEnd="@dimen/spacing_large"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/waterActionsList" />
-
-
+                    android:layout_marginEnd="@dimen/spacing_large" />
 
             </LinearLayout>
         </ScrollView>

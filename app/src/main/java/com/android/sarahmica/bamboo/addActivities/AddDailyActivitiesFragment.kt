@@ -97,20 +97,19 @@ class AddDailyActivitiesFragment : Fragment() {
     }
 
     private fun addLogEntry() {
-        // Get the list of all the selected "activity" chips
-        var ids: MutableList<Int> = binding.wasteActionsList.checkedChipIds
         var tags: MutableList<Int> = mutableListOf()
 
-        ids.addAll(binding.energyActionsList.checkedChipIds)
-        ids.addAll(binding.waterActionsList.checkedChipIds)
-        ids.addAll(binding.activismActionsList.checkedChipIds)
+        for (activityType in ActivityType.values()) {
+            // Get the list of all the selected "activity" chips
+            val chipGroup: ChipGroup = getChipGroup(activityType)
+            var ids: MutableList<Int> = chipGroup.checkedChipIds
 
-        // the tags of each chip will be the activityId of that DB activity
-        for (id in ids) {
-            val chip: Chip = binding.wasteActionsList.findViewById(id)
-            tags.add(chip.tag as Int)
+            // the tags of each chip will be the activityId of that DB activity
+            for (id in ids) {
+                val chip: Chip = chipGroup.findViewById(id)
+                tags.add(chip.tag as Int)
+            }
         }
-
         // once we have this list, just let the viewModel take care of inserting all this to the DB
         viewModel.onAddGreenActivities(tags)
     }

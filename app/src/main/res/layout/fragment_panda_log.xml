@@ -202,8 +202,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/startOfPosts" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
         </androidx.core.widget.NestedScrollView>
 
 
