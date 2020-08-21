@@ -16,6 +16,7 @@ import com.android.sarahmica.bamboo.database.BambooDatabase
 import com.android.sarahmica.bamboo.database.GreenActivity
 import com.android.sarahmica.bamboo.database.LogEntryRepository
 import com.android.sarahmica.bamboo.databinding.FragmentAddDailyActivitiesBinding
+import com.android.sarahmica.bamboo.databinding.GreenActivityChipBinding
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import timber.log.Timber
@@ -118,20 +119,37 @@ class AddDailyActivitiesFragment : Fragment() {
 
         val chipGroup = getChipGroup(type)
         val inflater = LayoutInflater.from(chipGroup.context)
-
-        val children = activityList.map { activity ->
-            val chip = inflater.inflate(R.layout.green_activity_chip, chipGroup, false) as Chip
-            chip.text = activity.activityName
-            chip.tag = activity.activityId
-            chip.chipBackgroundColor = getChipColor(type)
-            chip
+        activityList.forEach { activity ->
+            val chipBinding: GreenActivityChipBinding = DataBindingUtil.inflate(inflater, R.layout.green_activity_chip, chipGroup, true)
+            chipBinding.greenActivity = activity
+            binding.lifecycleOwner = this
         }
+
+
+        /*val chipGroup = getChipGroup(type)
+        val inflater = LayoutInflater.from(chipGroup.context)
 
         chipGroup.removeAllViews()
 
-        for (chip in children) {
+        activityList.forEach { activity ->
+            Timber.i("before inflating")
+            val chip = inflater.inflate(R.layout.green_activity_chip, chipGroup, false) as Chip
+
+            Timber.i("after inflating")
+            chip.id = View.generateViewId()
+            Timber.i("generated id: %s", chip.id)
+            chip.text = activity.activityName
+            chip.tag = activity.activityId
+            chip.chipBackgroundColor = getChipColor(type)
+
             chipGroup.addView(chip)
-        }
+            Timber.i("after 'adding'")
+        }*/
+
+
+        /*for (chip in children) {
+            chipGroup.addView(chip)
+        }*/
     }
 
     private fun getChipGroup(type: ActivityType): ChipGroup  {
@@ -143,19 +161,6 @@ class AddDailyActivitiesFragment : Fragment() {
             else -> {
                 Timber.e("Unknown ActivityType!")
                 binding.activismActionsList
-            }
-        }
-    }
-
-    private fun getChipColor(type: ActivityType): ColorStateList? {
-        return when(type) {
-            ActivityType.WASTE -> resources.getColorStateList(R.color.waste_chip_color_state_list)
-            ActivityType.ENERGY -> resources.getColorStateList(R.color.energy_chip_color_state_list)
-            ActivityType.WATER -> resources.getColorStateList(R.color.water_chip_color_state_list)
-            ActivityType.ACTIVISM -> resources.getColorStateList(R.color.activism_chip_color_state_list)
-            else -> {
-                Timber.e("Unknown ActivityType!")
-                resources.getColorStateList(R.color.activism_chip_color_state_list)
             }
         }
     }

@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.google.android.material.chip.Chip
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="16sp"
-    android:clickable="true"
-    android:focusable="true"
-    style="@style/Widget.MaterialComponents.Chip.Filter"
-    tools:text="Green Activity"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <import type="android.content.Context" />
+        <variable
+            name="greenActivity"
+            type="com.android.sarahmica.bamboo.database.GreenActivity" />
+    </data>
+    
+    <com.google.android.material.chip.Chip
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@{greenActivity.activityName}"
+        android:tag="@{greenActivity.activityId}"
+        app:chipBackgroundColor="@{greenActivity.getChipColor(context)}"
+        style="@style/Widget.MaterialComponents.Chip.Filter"
+        tools:text="Green Activity"/>
+</layout>
+
