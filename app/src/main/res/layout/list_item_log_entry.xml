@@ -64,6 +64,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="Sample Log Entry text"/>
 
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/logEntryActivityChips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/logImage"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.android.sarahmica.bamboo.MaskedCardView>
