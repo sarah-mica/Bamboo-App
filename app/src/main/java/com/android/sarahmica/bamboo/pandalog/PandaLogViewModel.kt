@@ -24,7 +24,7 @@ class PandaLogViewModel(
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    val logEntries: LiveData<List<LogEntryWithActivities>> = getMyLogEntries()
+    val logEntries: LiveData<List<LogEntryWithActivities>> = logEntryRepository.getAllLogEntries()
 
     private val _navigateToAddScreen = MutableLiveData<Boolean>()
     val navigateToAddScreen: LiveData<Boolean>
@@ -60,16 +60,6 @@ class PandaLogViewModel(
     init {
         initializeProgressBars()
         Timber.i("Hey I believe you just init.. right?");
-    }
-
-    fun getMyLogEntries(): LiveData<List<LogEntryWithActivities>> {
-        Timber.i("retrieving log entries")
-        val entries = logEntryRepository.getAllLogEntries()
-        Timber.i("size: %s", (entries.value?.size ?: 0))
-        if (entries.value?.isNotEmpty() == true) {
-            Timber.i("first elem: %s", entries.value?.get(0)?.greenActivityList.toString())
-        }
-        return entries
     }
 
     private fun initializeProgressBars() {
