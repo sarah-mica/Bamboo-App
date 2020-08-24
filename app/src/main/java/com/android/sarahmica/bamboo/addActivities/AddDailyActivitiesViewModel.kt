@@ -34,6 +34,8 @@ class AddDailyActivitiesViewModel(
     }
 
     fun onAddGreenActivities(activityIdList: List<Int>) {
+
+        //TODO: if the day is the same, perform an update instead
         uiScope.launch{
             withContext(Dispatchers.IO) {
                 logEntryRepository.insertLogEntry(activityIdList)

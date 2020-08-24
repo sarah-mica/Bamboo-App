@@ -1,6 +1,9 @@
 package com.android.sarahmica.bamboo.database
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -15,4 +18,11 @@ data class LogEntry (
     @ColumnInfo(name = "day_completed")
     val dayCompleted: Calendar = Calendar.getInstance()
 
-)
+) {
+    fun dateToString(): String {
+        // TODO: convert to proper locale
+        val format = SimpleDateFormat("EEEE, MMMM d, yyyy")
+        return format.format(this.dayCompleted.time)
+    }
+
+}
