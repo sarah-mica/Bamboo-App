@@ -122,34 +122,8 @@ class AddDailyActivitiesFragment : Fragment() {
         activityList.forEach { activity ->
             val chipBinding: GreenActivityChipBinding = DataBindingUtil.inflate(inflater, R.layout.green_activity_chip, chipGroup, true)
             chipBinding.greenActivity = activity
-            binding.lifecycleOwner = this
+            chipBinding.lifecycleOwner = this
         }
-
-
-        /*val chipGroup = getChipGroup(type)
-        val inflater = LayoutInflater.from(chipGroup.context)
-
-        chipGroup.removeAllViews()
-
-        activityList.forEach { activity ->
-            Timber.i("before inflating")
-            val chip = inflater.inflate(R.layout.green_activity_chip, chipGroup, false) as Chip
-
-            Timber.i("after inflating")
-            chip.id = View.generateViewId()
-            Timber.i("generated id: %s", chip.id)
-            chip.text = activity.activityName
-            chip.tag = activity.activityId
-            chip.chipBackgroundColor = getChipColor(type)
-
-            chipGroup.addView(chip)
-            Timber.i("after 'adding'")
-        }*/
-
-
-        /*for (chip in children) {
-            chipGroup.addView(chip)
-        }*/
     }
 
     private fun getChipGroup(type: ActivityType): ChipGroup  {
@@ -159,7 +133,7 @@ class AddDailyActivitiesFragment : Fragment() {
             ActivityType.WATER -> binding.waterActionsList
             ActivityType.ACTIVISM -> binding.activismActionsList
             else -> {
-                Timber.e("Unknown ActivityType!")
+                Timber.e("Unknown ActivityType! %s", type)
                 binding.activismActionsList
             }
         }

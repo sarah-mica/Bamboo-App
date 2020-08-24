@@ -2,11 +2,15 @@ package com.android.sarahmica.bamboo.pandalog
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.android.sarahmica.bamboo.R
 import com.android.sarahmica.bamboo.database.LogEntryWithActivities
+import com.android.sarahmica.bamboo.databinding.GreenActivityChipBinding
 import com.android.sarahmica.bamboo.databinding.ListItemLogEntryBinding
+import com.android.sarahmica.bamboo.databinding.LogEntryActivityChipBinding
 import timber.log.Timber
 
 class LogEntryAdapter :
@@ -23,7 +27,6 @@ class LogEntryAdapter :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Timber.i("bind view holder!!")
         val logEntry = getItem(position)
         (holder as LogEntryViewHolder).bind(logEntry)
     }
@@ -32,15 +35,20 @@ class LogEntryAdapter :
     class LogEntryViewHolder(private val binding: ListItemLogEntryBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            Timber.i("init new LogEntryViewHolder!")
-            binding.setClickListener {
-                binding.logEntry?.let{
-                    Timber.i("You have clicked the log entry")
-                }
-            }
+            Timber.i("init viewHolder")
         }
 
         fun bind(item: LogEntryWithActivities) {
+            //TODO: create a chip for each activity
+            val activityList = item.greenActivityList
+            val inflater = LayoutInflater.from(binding.logEntryActivityChips.context)
+
+            activityList.forEach { activity ->
+                Timber.i("binding chip? %s", activity.activityName)
+                val chipBinding: LogEntryActivityChipBinding = DataBindingUtil.inflate(inflater, R.layout.log_entry_activity_chip, binding.logEntryActivityChips, true)
+                chipBinding.greenActivity = activity
+                chipBinding.lifecycleOwner = binding.lifecycleOwner
+            }
             binding.apply {
                 logEntry = item
                 executePendingBindings()

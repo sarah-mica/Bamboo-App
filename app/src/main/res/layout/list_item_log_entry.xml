@@ -21,6 +21,7 @@
         android:layout_marginBottom="@dimen/card_bottom_margin"
         android:onClick="@{clickListener}"
         app:cardElevation="@dimen/card_elevation"
+        android:padding="@dimen/spacing_normal"
         app:cardPreventCornerOverlap="false"
         app:shapeAppearanceOverlay="@style/AppTheme.Card">
 
@@ -36,38 +37,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/logImage"
-                tools:text="Monday, August 18, 2020"
-                />
+                tools:text="Monday, August 18, 2020" />
 
             <ImageView
                 android:id="@+id/logImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_normal"
                 app:srcCompat="@android:drawable/btn_star_big_on"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/logEntryActivityList"
+                app:layout_constraintEnd_toStartOf="@id/logEntryActivityChips"
                 app:layout_constraintTop_toBottomOf="@id/logEntryDate"
                 android:contentDescription="TODO" />
 
-
-            <TextView
-                android:id="@+id/logEntryActivityList"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_normal"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:textAppearance="?attr/textAppearanceListItem"
-                android:gravity="center_horizontal"
-                android:text="@{logEntry.greenActivityList.toString()}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/logImage"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="Sample Log Entry text"/>
-
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/logEntryActivityChips"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_normal"
+                app:layout_constraintTop_toBottomOf="@id/logEntryDate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/logImage"
                 app:layout_constraintBottom_toBottomOf="parent" />
