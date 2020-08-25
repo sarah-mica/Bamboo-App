@@ -8,15 +8,13 @@ import com.android.sarahmica.bamboo.database.LogEntryDao
 import com.android.sarahmica.bamboo.database.LogEntryRepository
 import com.android.sarahmica.bamboo.database.LogEntryWithActivities
 import com.android.sarahmica.bamboo.database.LogEntryWithActivityDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
 class PandaLogViewModel(
-    val logEntryRepository: LogEntryRepository,
+    private val logEntryRepository: LogEntryRepository,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -25,6 +23,10 @@ class PandaLogViewModel(
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     val logEntries: LiveData<List<LogEntryWithActivities>> = logEntryRepository.getAllLogEntries()
+
+    private val _today = MutableLiveData<LogEntryWithActivities?>()
+    val today: LiveData<LogEntryWithActivities?>
+        get() = _today
 
     private val _navigateToAddScreen = MutableLiveData<Boolean>()
     val navigateToAddScreen: LiveData<Boolean>
@@ -50,16 +52,21 @@ class PandaLogViewModel(
     val activismScore: LiveData<Int>
         get() = _activismScore
 
-    // I need to calculate the "panda score" by pulling all the activities they've done for the day
-
-    // I need a list of all the activities they've done today and I should display them i
-    // in the recyclerView list
-
-    //TODO: how do I get headings for the dates?
-
     init {
+        initializeToday()
         initializeProgressBars()
-        Timber.i("Hey I believe you just init.. right?");
+    }
+
+    private fun initializeToday() {
+        uiScope.launch {
+            _today.value = getTodayFromDatabase()
+        }
+    }
+
+    private suspend fun getTodayFromDatabase(): LogEntryWithActivities? {
+        return withContext(Dispatchers.IO) {
+            logEntryRepository.getToday()
+        }
     }
 
     private fun initializeProgressBars() {

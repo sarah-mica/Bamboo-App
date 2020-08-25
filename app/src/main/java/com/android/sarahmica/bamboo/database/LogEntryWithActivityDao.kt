@@ -29,4 +29,13 @@ interface LogEntryWithActivityDao {
     @Query("SELECT * FROM log_entry_table WHERE day_completed BETWEEN :dayStart AND :dayEnd")
     fun getLogEntryWithActivities(dayStart: Calendar, dayEnd: Calendar): LogEntryWithActivities?
 
+    /**
+     * Get a logEntry and its associated activities for the given id
+     *
+     * @param logEntryId the id associated with this particular entry
+     */
+    @Transaction
+    @Query("SELECT * FROM log_entry_table WHERE logEntryId = :logEntryId")
+    fun getLogEntryWithActivities(logEntryId: Long): LogEntryWithActivities?
+
 }

@@ -15,6 +15,21 @@ class LogEntryRepository private constructor(
         val logEntryId: Long = logEntryDao.insert(logEntry!!)
         Timber.i("logEntry id: %s", logEntryId)
 
+        // Now insert a logEntry with all its associated activities
+        activityList.forEach { activityId ->
+            val logEntryWithActivities = ActivityLogEntry(activityId, logEntryId)
+            logEntryWithActivityDao.insert(logEntryWithActivities)
+        }
+
+    }
+
+    fun getEntry(logEntryId: Long): LogEntryWithActivities? {
+        return logEntryWithActivityDao.getLogEntryWithActivities(logEntryId)
+    }
+
+    fun getToday(): LogEntryWithActivities? {
+        // These variables are to specify the Calendar start and end of day so we
+        // can search for the entry within that time frame
         val dayStart: Calendar = Calendar.getInstance().apply {
             set(Calendar.HOUR, 0)
             set(Calendar.MINUTE, 0)
@@ -29,13 +44,7 @@ class LogEntryRepository private constructor(
             set(Calendar.MILLISECOND, 999)
             set(Calendar.AM_PM, Calendar.PM)
         }
-
-        // Now insert a logEntry with all its associated activities
-        activityList.forEach { activityId ->
-            val logEntryWithActivities = ActivityLogEntry(activityId, logEntryId)
-            logEntryWithActivityDao.insert(logEntryWithActivities)
-        }
-
+        return logEntryWithActivityDao.getLogEntryWithActivities(dayStart, dayEnd)
     }
 
     fun getAllLogEntries(): LiveData<List<LogEntryWithActivities>> {

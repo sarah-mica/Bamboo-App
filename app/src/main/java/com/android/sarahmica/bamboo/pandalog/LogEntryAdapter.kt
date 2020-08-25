@@ -39,12 +39,10 @@ class LogEntryAdapter :
         }
 
         fun bind(item: LogEntryWithActivities) {
-            //TODO: create a chip for each activity
             val activityList = item.greenActivityList
             val inflater = LayoutInflater.from(binding.logEntryActivityChips.context)
 
             activityList.forEach { activity ->
-                Timber.i("binding chip? %s", activity.activityName)
                 val chipBinding: LogEntryActivityChipBinding = DataBindingUtil.inflate(inflater, R.layout.log_entry_activity_chip, binding.logEntryActivityChips, true)
                 chipBinding.greenActivity = activity
                 chipBinding.lifecycleOwner = binding.lifecycleOwner

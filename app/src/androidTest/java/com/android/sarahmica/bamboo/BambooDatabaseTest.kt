@@ -60,17 +60,17 @@ class BambooDatabaseTest {
         var logEntry: LogEntry? = LogEntry()
         logEntryDao.insert(logEntry!!)
 
-        assert(logEntry.id != 0L)
-        Timber.i("logEntry id: " + logEntry.id)
+        assert(logEntry.logEntryId != 0L)
+        Timber.i("logEntry id: " + logEntry.logEntryId)
 
-        val dayStart: Calendar = Calendar.getInstance().apply {
+        val dayStart: Calendar = getInstance().apply {
             set(HOUR, 0)
             set(MINUTE, 0)
             set(SECOND, 0)
             set(MILLISECOND, 0)
             set(AM_PM, AM)
         }
-        val dayEnd: Calendar = Calendar.getInstance().apply {
+        val dayEnd: Calendar = getInstance().apply {
             set(HOUR, 11)
             set(MINUTE, 59)
             set(SECOND, 59)
@@ -80,19 +80,18 @@ class BambooDatabaseTest {
 
         logEntry = logEntryDao.getEntryForDay(dayStart, dayEnd)
         assert(logEntry != null)
-        Timber.i("logEntry id: " + logEntry!!.id)
+        Timber.i("logEntry id: " + logEntry!!.logEntryId)
 
         // Now insert a logEntry with all its associated activities
-        val logEntryWithActivities = ActivityLogEntry(1, logEntry.id)
+        val logEntryWithActivities = ActivityLogEntry(1, logEntry.logEntryId)
         logEntryWithActivityDao.insert(logEntryWithActivities)
 
         val retrievedEntryWithActivities = logEntryWithActivityDao.getLogEntryWithActivities(dayStart, dayEnd)
         assert(retrievedEntryWithActivities != null)
 
-        assertEquals("log entry ids do not match", logEntry.id, retrievedEntryWithActivities!!.logEntry.id)
-        assert(retrievedEntryWithActivities.greenActivityList != null)
+        assertEquals("log entry ids do not match", logEntry.logEntryId, retrievedEntryWithActivities!!.logEntry.logEntryId)
         assertEquals("activity id inserted does not match", 1,
-            retrievedEntryWithActivities.greenActivityList.get(0).activityId
+            retrievedEntryWithActivities.greenActivityList[0].activityId
         )
     }
 }

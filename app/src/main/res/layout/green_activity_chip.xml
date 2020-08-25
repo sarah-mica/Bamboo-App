@@ -9,6 +9,9 @@
         <variable
             name="greenActivity"
             type="com.android.sarahmica.bamboo.database.GreenActivity" />
+        <variable
+            name="addActivitiesViewModel"
+            type="com.android.sarahmica.bamboo.addActivities.AddDailyActivitiesViewModel" />
     </data>
     
     <com.google.android.material.chip.Chip
@@ -17,6 +20,7 @@
         android:textSize="16sp"
         android:clickable="true"
         android:focusable="true"
+        android:checked="@{addActivitiesViewModel.isChipSelected(greenActivity)}"
         android:text="@{greenActivity.activityName}"
         android:tag="@{greenActivity.activityId}"
         app:chipBackgroundColor="@{greenActivity.getChipColor(context)}"

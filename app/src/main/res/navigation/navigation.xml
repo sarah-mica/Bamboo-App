@@ -21,6 +21,10 @@
         android:name="com.android.sarahmica.bamboo.addActivities.AddDailyActivitiesFragment"
         android:label="AddDailyActivitiesFragment"
         tools:layout="@layout/fragment_add_daily_activities">
+        <argument
+            android:name="dayKey"
+            app:argType="long"
+            android:defaultValue="-1L" />
         <action
             android:id="@+id/action_addDailyActivitiesFragment_to_pandaLogFragment"
             app:destination="@id/pandaLogFragment"

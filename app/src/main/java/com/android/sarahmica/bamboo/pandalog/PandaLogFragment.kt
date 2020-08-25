@@ -50,8 +50,11 @@ class PandaLogFragment : Fragment() {
             Observer { shouldNavigate ->
                 if (shouldNavigate == true) {
                     val navController = binding.root.findNavController()
-                    navController.navigate(PandaLogFragmentDirections
-                        .actionPandaLogFragmentToAddDailyActivitiesFragment())
+                    var navigateDirections = PandaLogFragmentDirections.actionPandaLogFragmentToAddDailyActivitiesFragment()
+                    if (pandaLogViewModel.today.value != null) {
+                        navigateDirections = navigateDirections.setDayKey(pandaLogViewModel.today.value!!.logEntry.logEntryId)
+                    }
+                    navController.navigate(navigateDirections)
                     pandaLogViewModel.onNavigatedToAddScreen()
                 }
             })
@@ -61,7 +64,6 @@ class PandaLogFragment : Fragment() {
 
     private fun subscribeUi(adapter: LogEntryAdapter) {
         pandaLogViewModel.logEntries.observe(viewLifecycleOwner, Observer { logEntries ->
-            Timber.i("submitting list to adapter!")
             adapter.submitList(logEntries)
         })
     }

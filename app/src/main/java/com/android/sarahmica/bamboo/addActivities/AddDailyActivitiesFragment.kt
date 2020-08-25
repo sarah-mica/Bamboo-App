@@ -1,6 +1,5 @@
 package com.android.sarahmica.bamboo.addActivities
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,7 +42,9 @@ class AddDailyActivitiesFragment : Fragment() {
             BambooDatabase.getInstance(application).logEntryDao(),
             BambooDatabase.getInstance(application).logEntryWithActivitiesDao())
 
-        val viewModelFactory = AddDailyActivitiesViewModelFactory(activityDao, logEntryRepository)
+        val arguments = AddDailyActivitiesFragmentArgs.fromBundle(requireArguments())
+
+        val viewModelFactory = AddDailyActivitiesViewModelFactory(arguments.dayKey, activityDao, logEntryRepository)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(AddDailyActivitiesViewModel::class.java)
 
@@ -122,6 +123,7 @@ class AddDailyActivitiesFragment : Fragment() {
         activityList.forEach { activity ->
             val chipBinding: GreenActivityChipBinding = DataBindingUtil.inflate(inflater, R.layout.green_activity_chip, chipGroup, true)
             chipBinding.greenActivity = activity
+            chipBinding.addActivitiesViewModel = viewModel
             chipBinding.lifecycleOwner = this
         }
     }
