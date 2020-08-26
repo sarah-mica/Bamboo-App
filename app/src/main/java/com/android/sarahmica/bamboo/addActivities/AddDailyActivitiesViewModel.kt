@@ -78,6 +78,8 @@ class AddDailyActivitiesViewModel(
     }
 
     private suspend fun getPreSelectedActivitiesFromDb(): List<GreenActivity>? {
+        //TODO: I think the big problem is that this isn't ensured to finish before the
+        // fragment attempts to bind the chip data
         return withContext(Dispatchers.IO) {
             Timber.i("dayKey: %s", dayKey)
             val day = logEntryRepository.getEntry(dayKey)
