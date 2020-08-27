@@ -10,6 +10,7 @@ class LogEntryRepository private constructor(
 ) {
     suspend fun insertLogEntry(activityList: List<Int>) {
 
+        // don't insert a null entry
         if (activityList.isEmpty()) {
             return
         }
@@ -24,7 +25,13 @@ class LogEntryRepository private constructor(
             val logEntryWithActivities = ActivityLogEntry(activityId, logEntryId)
             logEntryWithActivityDao.insert(logEntryWithActivities)
         }
+    }
 
+    suspend fun updateLogEntry(dayKey: Long, activityList: List<Int>) {
+        activityList.forEach {activityId ->
+            //TODO: Only insert the entries that don't already exist, and remove any activites that have been removed
+            Timber.i("TODO")
+        }
     }
 
     fun getEntry(logEntryId: Long): LogEntryWithActivities? {

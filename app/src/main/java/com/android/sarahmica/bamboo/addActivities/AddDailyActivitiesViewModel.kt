@@ -21,15 +21,10 @@ class AddDailyActivitiesViewModel(
     // Live Data properties
     private val _navigateToPandaLog = MutableLiveData<Boolean>()
 
-
     val navigateToPandaLog: LiveData<Boolean>
         get() = _navigateToPandaLog
 
-    private val _selectedActivities = MutableLiveData<List<GreenActivity>>()
-    val selectedActivities: LiveData<List<GreenActivity>>
-        get() = _selectedActivities
-
-
+    private val selectedActivities = MutableLiveData<List<GreenActivity>>()
 
     private val _wasteActivitiesList = MutableLiveData<List<GreenActivity>>()
     val wasteActivitiesList: LiveData<List<GreenActivity>>
@@ -59,15 +54,12 @@ class AddDailyActivitiesViewModel(
 
     init {
         getAllActivitiesFromDb()
-        /*if (dayKey != -1L) {
-            getPreSelectedActivities()
-        }*/
     }
 
 
     private fun getAllActivitiesFromDb() {
         uiScope.launch {
-            _selectedActivities.value = getPreSelectedActivitiesFromDb()
+            selectedActivities.value = getPreSelectedActivitiesFromDb()
             _wasteActivitiesList.value = getActivityListFromDatabase(ActivityType.WASTE)
             _energyActivitiesList.value = getActivityListFromDatabase(ActivityType.ENERGY)
             _waterActivitiesList.value = getActivityListFromDatabase(ActivityType.WATER)
@@ -76,58 +68,25 @@ class AddDailyActivitiesViewModel(
     }
 
 
-    private fun getPreSelectedActivities() {
-        uiScope.launch {
-            Timber.i("getting preselected activities")
-            _selectedActivities.value = getPreSelectedActivitiesFromDb()
-        }
-    }
-
     private suspend fun getPreSelectedActivitiesFromDb(): List<GreenActivity>? {
-        //TODO: I think the big problem is that this isn't ensured to finish before the
-        // fragment attempts to bind the chip data
         return withContext(Dispatchers.IO) {
-            Timber.i("dayKey: %s", dayKey)
             val day = logEntryRepository.getEntry(dayKey)
-            if (day == null) {
-                Timber.i("day is null")
-            }
-            if (day?.greenActivityList == null) {
-                Timber.i("green activity list is null")
-            }
-            if (day?.greenActivityList!!.isEmpty()) {
-                Timber.i("size of activity list is 0")
-            }
-            day?.greenActivityList!!.forEach {
-                Timber.i("activity: %s", it.activityName)
-            }
             day?.greenActivityList
         }
     }
 
     private suspend fun getActivityListFromDatabase(type: ActivityType): List<GreenActivity> {
         return withContext(Dispatchers.IO) {
-            // if we haven't gotten the current day entry yet with the list of selected entries,
-            // do that first
-            if (dayKey != -1L && _selectedActivities.value == null) {
-                _selectedActivities.value = logEntryRepository.getEntry(dayKey)?.greenActivityList
-            }
             activityDao.getAllActivitiesByType(type)
         }
     }
 
     fun isChipSelected(activity: GreenActivity?): Boolean {
-        if (activity != null) {
-            Timber.i("trying to set check state for chip: %s", activity.activityName)
-        }
         if (activity == null || selectedActivities.value == null) {
-            Timber.i("selectedActivities is null for some reason")
             return false
         }
 
-        val isChecked = selectedActivities.value!!.contains(activity)
-        Timber.i("isChecked? %s", isChecked)
-        return isChecked
+        return selectedActivities.value!!.contains(activity)
     }
 
     fun doneNavigating() {
@@ -139,12 +98,15 @@ class AddDailyActivitiesViewModel(
         //TODO: if the day is the same, perform an update instead
         uiScope.launch{
             withContext(Dispatchers.IO) {
-                logEntryRepository.insertLogEntry(activityIdList)
+                if (dayKey == -1L) {
+                    logEntryRepository.insertLogEntry(activityIdList)
+                } else {
+                    logEntryRepository.updateLogEntry(dayKey, activityIdList)
+                }
             }
             _navigateToPandaLog.value = true
         }
     }
-
 
     override fun onCleared() {
         super.onCleared()
