@@ -25,10 +25,12 @@ class AddDailyActivitiesViewModel(
     val navigateToPandaLog: LiveData<Boolean>
         get() = _navigateToPandaLog
 
-    private val selectedActivities = MutableLiveData<List<GreenActivity>>()
+    private val _selectedActivities = MutableLiveData<List<GreenActivity>>()
+    val selectedActivities: LiveData<List<GreenActivity>>
+        get() = _selectedActivities
 
 
-    /*
+
     private val _wasteActivitiesList = MutableLiveData<List<GreenActivity>>()
     val wasteActivitiesList: LiveData<List<GreenActivity>>
         get() = _wasteActivitiesList
@@ -45,35 +47,39 @@ class AddDailyActivitiesViewModel(
     val activismActivitiesList: LiveData<List<GreenActivity>>
         get() = _activismActivitiesList
 
-     */
 
+
+    /*
     val wasteActivitiesList: LiveData<List<GreenActivity>> = activityDao.getAllActivitiesByType(ActivityType.WASTE)
     val energyActivitiesList: LiveData<List<GreenActivity>> = activityDao.getAllActivitiesByType(ActivityType.ENERGY)
     val waterActivitiesList: LiveData<List<GreenActivity>> = activityDao.getAllActivitiesByType(ActivityType.WATER)
     val activismActivitiesList: LiveData<List<GreenActivity>> = activityDao.getAllActivitiesByType(ActivityType.ACTIVISM)
+    */
+
 
     init {
-        //getAllActivitiesFromDb()
-        if (dayKey != -1L) {
+        getAllActivitiesFromDb()
+        /*if (dayKey != -1L) {
             getPreSelectedActivities()
-        }
+        }*/
     }
 
-    /*
+
     private fun getAllActivitiesFromDb() {
         uiScope.launch {
+            _selectedActivities.value = getPreSelectedActivitiesFromDb()
             _wasteActivitiesList.value = getActivityListFromDatabase(ActivityType.WASTE)
             _energyActivitiesList.value = getActivityListFromDatabase(ActivityType.ENERGY)
             _waterActivitiesList.value = getActivityListFromDatabase(ActivityType.WATER)
             _activismActivitiesList.value = getActivityListFromDatabase(ActivityType.ACTIVISM)
         }
     }
-    */
+
 
     private fun getPreSelectedActivities() {
         uiScope.launch {
             Timber.i("getting preselected activities")
-            selectedActivities.value = getPreSelectedActivitiesFromDb()
+            _selectedActivities.value = getPreSelectedActivitiesFromDb()
         }
     }
 
@@ -99,11 +105,16 @@ class AddDailyActivitiesViewModel(
         }
     }
 
-    /*private suspend fun getActivityListFromDatabase(type: ActivityType): List<GreenActivity> {
+    private suspend fun getActivityListFromDatabase(type: ActivityType): List<GreenActivity> {
         return withContext(Dispatchers.IO) {
+            // if we haven't gotten the current day entry yet with the list of selected entries,
+            // do that first
+            if (dayKey != -1L && _selectedActivities.value == null) {
+                _selectedActivities.value = logEntryRepository.getEntry(dayKey)?.greenActivityList
+            }
             activityDao.getAllActivitiesByType(type)
         }
-    }*/
+    }
 
     fun isChipSelected(activity: GreenActivity?): Boolean {
         if (activity != null) {

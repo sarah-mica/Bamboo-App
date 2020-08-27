@@ -16,7 +16,7 @@ interface GreenActivityDao {
     fun getAllActivities(): LiveData<List<GreenActivity>>
 
     @Query("SELECT * FROM green_activities WHERE activity_type = :type ORDER BY activity_name")
-    fun getAllActivitiesByType(type: ActivityType): LiveData<List<GreenActivity>>
+    fun getAllActivitiesByType(type: ActivityType): List<GreenActivity>
 
     @Query("SELECT COUNT(*) FROM green_activities")
     fun getNumActivities(): Int

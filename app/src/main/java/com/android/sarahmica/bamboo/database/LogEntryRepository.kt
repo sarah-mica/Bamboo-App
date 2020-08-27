@@ -10,6 +10,10 @@ class LogEntryRepository private constructor(
 ) {
     suspend fun insertLogEntry(activityList: List<Int>) {
 
+        if (activityList.isEmpty()) {
+            return
+        }
+
         // first insert a new log entry
         var logEntry: LogEntry? = LogEntry()
         val logEntryId: Long = logEntryDao.insert(logEntry!!)

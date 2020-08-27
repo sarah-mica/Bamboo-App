@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.android.sarahmica.bamboo.ActivityType
 import com.android.sarahmica.bamboo.R
 import com.android.sarahmica.bamboo.database.BambooDatabase
@@ -47,6 +48,11 @@ class AddDailyActivitiesFragment : Fragment() {
         val viewModelFactory = AddDailyActivitiesViewModelFactory(arguments.dayKey, activityDao, logEntryRepository)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(AddDailyActivitiesViewModel::class.java)
+
+
+        viewModel.selectedActivities.observe(viewLifecycleOwner, Observer { list ->
+            Timber.i("selectedActivities changed, size: %s", list.size)
+        })
 
         // Create chips for all the activities in the DB
         viewModel.wasteActivitiesList.observe(viewLifecycleOwner, object: Observer<List<GreenActivity>> {
@@ -117,6 +123,7 @@ class AddDailyActivitiesFragment : Fragment() {
     }
 
     private fun populateChipGroup(activityList: List<GreenActivity>, type: ActivityType) {
+        Timber.i("populating chip group: %s", type.toString())
 
         val chipGroup = getChipGroup(type)
         val inflater = LayoutInflater.from(chipGroup.context)

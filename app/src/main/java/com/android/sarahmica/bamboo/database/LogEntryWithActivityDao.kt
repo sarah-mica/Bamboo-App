@@ -16,7 +16,7 @@ interface LogEntryWithActivityDao {
      * Get a list of all logEntries and their associated activities
      */
     @Transaction
-    @Query("SELECT * FROM log_entry_table ORDER BY day_completed Asc")
+    @Query("SELECT * FROM log_entry_table ORDER BY day_completed DESC")
     fun getAllLogEntriesWithActivities(): LiveData<List<LogEntryWithActivities>>
 
     /**
