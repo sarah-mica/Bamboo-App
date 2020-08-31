@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.android.sarahmica.bamboo.ActivityType
 import com.android.sarahmica.bamboo.R
 import com.android.sarahmica.bamboo.database.BambooDatabase
@@ -23,6 +22,11 @@ import timber.log.Timber
 
 @Suppress("DEPRECATION")
 class AddDailyActivitiesFragment : Fragment() {
+
+    //TODO: Figure out how to get this screen to load a lot less slowly!!!
+
+    //TODO: Have a better way of displaying all the options.. maybe you can have more general categories and
+    //      then get more details from there after selecting? Or have it similar to the Waze buttons!
 
     private lateinit var binding: FragmentAddDailyActivitiesBinding
     private lateinit var viewModel: AddDailyActivitiesViewModel
@@ -48,11 +52,6 @@ class AddDailyActivitiesFragment : Fragment() {
         val viewModelFactory = AddDailyActivitiesViewModelFactory(arguments.dayKey, activityDao, logEntryRepository)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(AddDailyActivitiesViewModel::class.java)
-
-
-        viewModel.selectedActivities.observe(viewLifecycleOwner, Observer { list ->
-            Timber.i("selectedActivities changed, size: %s", list.size)
-        })
 
         // Create chips for all the activities in the DB
         viewModel.wasteActivitiesList.observe(viewLifecycleOwner, object: Observer<List<GreenActivity>> {
