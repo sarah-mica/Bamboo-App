@@ -12,9 +12,8 @@ interface LogEntryDao {
     @Update
     suspend fun update(logEntry: LogEntry)
 
-    /**
-     *
-     */
+    @Query("DELETE FROM log_entry_table WHERE logEntryId = :logEntryId")
+    suspend fun delete(logEntryId: Long)
 
     /**
      * Selects and returns the row that matches the supplied primary key

@@ -12,6 +12,9 @@ interface LogEntryWithActivityDao {
     @Update
     suspend fun update(entryWithActivities: ActivityLogEntry)
 
+    @Delete
+    suspend fun removeAll(entriesToRemove: List<ActivityLogEntry>)
+
     /**
      * Get a list of all logEntries and their associated activities
      */

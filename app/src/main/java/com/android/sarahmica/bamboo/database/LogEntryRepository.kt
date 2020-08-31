@@ -28,9 +28,33 @@ class LogEntryRepository private constructor(
     }
 
     suspend fun updateLogEntry(dayKey: Long, activityList: List<Int>) {
-        activityList.forEach {activityId ->
-            //TODO: Only insert the entries that don't already exist, and remove any activites that have been removed
-            Timber.i("TODO")
+        val currentEntries: List<GreenActivity>? = logEntryWithActivityDao.getLogEntryWithActivities(dayKey)?.greenActivityList
+
+        if (currentEntries == null) {
+            // This should not happen
+            insertLogEntry(activityList)
+            return
+        }
+
+        val currentIds: List<Int> = currentEntries.map { activity -> activity.activityId }
+        val activitiesToRemove = currentEntries.filter { greenActivity ->  !activityList.contains(greenActivity.activityId) }
+        val entriesToRemove = activitiesToRemove.map { activity -> ActivityLogEntry(activity.activityId, dayKey) }
+
+        // remove entries that are no longer selected
+        logEntryWithActivityDao.removeAll(entriesToRemove)
+
+        // Now insert a logEntry with all its associated activities
+        activityList.forEach { activityId ->
+            // only insert a new entry if it doesn't already exist
+            if (!currentIds.contains(activityId)) {
+                val logEntryWithActivities = ActivityLogEntry(activityId, dayKey)
+                logEntryWithActivityDao.insert(logEntryWithActivities)
+            }
+        }
+
+        if (activityList.isEmpty()) {
+            // if there are no longer any activities then remove the log entry as well
+            logEntryDao.delete(dayKey)
         }
     }
 
