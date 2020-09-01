@@ -54,7 +54,7 @@ class PandaLogViewModel(
         get() = _activismScore
 
     init {
-        Timber.i("-------------------------------------     I just init the viewModel     ---------------------------------------------------------")
+        _pandaScore.value = 0
         initializeToday()
     }
 
