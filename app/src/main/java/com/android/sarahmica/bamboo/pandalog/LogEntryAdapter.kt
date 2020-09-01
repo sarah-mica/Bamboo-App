@@ -20,7 +20,6 @@ class LogEntryAdapter :
 {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        Timber.i("create view holder!")
         return LogEntryViewHolder(ListItemLogEntryBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
         )
@@ -33,10 +32,6 @@ class LogEntryAdapter :
 
 
     class LogEntryViewHolder(private val binding: ListItemLogEntryBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            Timber.i("init viewHolder")
-        }
 
         fun bind(item: LogEntryWithActivities) {
             val activityList = item.greenActivityList

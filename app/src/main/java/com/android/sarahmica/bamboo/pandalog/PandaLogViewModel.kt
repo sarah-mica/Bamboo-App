@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.android.sarahmica.bamboo.ActivityType
 import com.android.sarahmica.bamboo.database.LogEntryDao
 import com.android.sarahmica.bamboo.database.LogEntryRepository
 import com.android.sarahmica.bamboo.database.LogEntryWithActivities
@@ -53,13 +54,18 @@ class PandaLogViewModel(
         get() = _activismScore
 
     init {
+        Timber.i("-------------------------------------     I just init the viewModel     ---------------------------------------------------------")
         initializeToday()
-        initializeProgressBars()
     }
 
     private fun initializeToday() {
         uiScope.launch {
             _today.value = getTodayFromDatabase()
+            _plasticScore.value = calculateScoreForCategory(ActivityType.WASTE)
+            _energyScore.value = calculateScoreForCategory(ActivityType.ENERGY)
+            _waterScore.value = calculateScoreForCategory(ActivityType.WATER)
+            _activismScore.value = calculateScoreForCategory(ActivityType.ACTIVISM)
+            _pandaScore.value = _plasticScore.value!! + _energyScore.value!! + _waterScore.value!! + _activismScore.value!!
         }
     }
 
@@ -69,12 +75,23 @@ class PandaLogViewModel(
         }
     }
 
-    private fun initializeProgressBars() {
-        _pandaScore.value = 0
-        _plasticScore.value = 0
-        _energyScore.value = 0
-        _waterScore.value = 0
-        _activismScore.value = 0
+    /*
+     * Simply add up the score for each activity to calculate the plastic Score
+     */
+    private fun calculateScoreForCategory(type: ActivityType): Int {
+        var total = 0
+
+        if (_today.value == null) {
+            Timber.i("today is null")
+        }
+
+        _today.value?.greenActivityList?.forEach { activity ->
+            if (activity.activityType == type) {
+                total += activity.pointValue
+            }
+        }
+        Timber.i("Point Value = %s", total)
+        return total
     }
 
     fun onFabClicked() {
