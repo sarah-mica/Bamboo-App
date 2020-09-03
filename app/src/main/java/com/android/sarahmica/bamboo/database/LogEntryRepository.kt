@@ -8,7 +8,7 @@ class LogEntryRepository private constructor(
     private val logEntryDao: LogEntryDao,
     private val logEntryWithActivityDao: LogEntryWithActivityDao
 ) {
-    suspend fun insertLogEntry(activityList: List<Int>) {
+    suspend fun insertLogEntry(logText: String, activityList: List<Int>) {
 
         // don't insert a null entry
         if (activityList.isEmpty()) {
@@ -16,9 +16,8 @@ class LogEntryRepository private constructor(
         }
 
         // first insert a new log entry
-        var logEntry: LogEntry? = LogEntry()
+        var logEntry: LogEntry? = LogEntry(0L, Calendar.getInstance(), logText)
         val logEntryId: Long = logEntryDao.insert(logEntry!!)
-        Timber.i("logEntry id: %s", logEntryId)
 
         // Now insert a logEntry with all its associated activities
         activityList.forEach { activityId ->
@@ -27,12 +26,12 @@ class LogEntryRepository private constructor(
         }
     }
 
-    suspend fun updateLogEntry(dayKey: Long, activityList: List<Int>) {
+    suspend fun updateLogEntry(dayKey: Long, logText: String, activityList: List<Int>) {
         val currentEntries: List<GreenActivity>? = logEntryWithActivityDao.getLogEntryWithActivities(dayKey)?.greenActivityList
 
         if (currentEntries == null) {
             // This should not happen
-            insertLogEntry(activityList)
+            insertLogEntry(logText, activityList)
             return
         }
 
@@ -52,9 +51,11 @@ class LogEntryRepository private constructor(
             }
         }
 
-        if (activityList.isEmpty()) {
+        if (activityList.isEmpty() && logText.isBlank()) {
             // if there are no longer any activities then remove the log entry as well
             logEntryDao.delete(dayKey)
+        } else {
+            logEntryDao.updateText(dayKey, logText)
         }
     }
 
